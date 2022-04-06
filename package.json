@@ -1,0 +1,55 @@
+{
+	"name": "p-np",
+	"version": "1.0.0",
+	"description": "prock see",
+	"main": "index.js",
+	"scripts": {
+		"start": "node dist/",
+		"build": "tsc",
+		"create-exes": "pkg ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Prodigy-Hacking/P-NP.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Prodigy-Hacking/P-NP/issues"
+	},
+	"bin": "./dist/index.js",
+	"pkg": {
+		"assets": [
+			"node_modules/**/*",
+			"dist/**/*"
+		],
+		"targets": [
+			"node14-macos-x64",
+			"node14-win-x64",
+			"node14-linux-x64"
+		]
+	},
+	"homepage": "https://github.com/Prodigy-Hacking/P-NP#readme",
+	"devDependencies": {
+		"@types/cors": "^2.8.10",
+		"@types/express": "^4.17.11",
+		"@types/js-beautify": "^1.13.1",
+		"@types/lodash": "^4.14.168",
+		"@types/node": "^14.14.35",
+		"@types/node-fetch": "^2.5.8",
+		"@typescript-eslint/eslint-plugin": "^4.18.0",
+		"@typescript-eslint/parser": "^4.18.0",
+		"eslint": "^7.22.0",
+		"pkg": "^5.4.1",
+		"typescript": "^4.6.3"
+	},
+	"dependencies": {
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"fp-ts": "^2.9.5",
+		"js-beautify": "^1.14.0",
+		"lodash": "^4.17.21",
+		"node-fetch": "^2.6.1",
+		"sucrase": "^3.17.1"
+	}
+}
