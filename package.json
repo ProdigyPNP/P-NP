@@ -1,7 +1,7 @@
 {
-	"name": "p-np",
+	"name": "P-NP",
 	"version": "1.0.0",
-	"description": "prock see",
+	"description": "Modifies and serves Prodigy's game files",
 	"main": "index.js",
 	"scripts": {
 		"start": "node dist/",
@@ -10,12 +10,12 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/Prodigy-Hacking/P-NP.git"
+		"url": "git+https://github.com/ProdigyPNP/P-NP.git"
 	},
 	"author": "",
-	"license": "ISC",
+	"license": "MPL-2.0",
 	"bugs": {
-		"url": "https://github.com/Prodigy-Hacking/P-NP/issues"
+		"url": "https://github.com/ProdigyPNP/P-NP/issues"
 	},
 	"bin": "./dist/index.js",
 	"pkg": {
