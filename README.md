@@ -54,15 +54,3 @@ npm install
 node dist
 ```
 <br>
-
-## Build from Source
-
-**This breaks P-NP, DO NOT RUN IT.**
-```sh
-npx tsc
-```
-
-Running
-```sh
-node dist
-```
