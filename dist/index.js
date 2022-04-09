@@ -69,4 +69,4 @@ const unminifySource = false;
     app.get("/version", (req, res) => res.send(constants_1.VERSION));
     app.get("/download", (req, res) => res.redirect(constants_1.DOWNLOAD_LINK));
     const addr = app.listen(process.env.PORT || 1337, () => console.log(`P-NP has started on :${typeof addr === "string" ? addr : addr.port || ""}!`)).address();
-})();\
+})();
