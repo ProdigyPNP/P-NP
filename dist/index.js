@@ -193,7 +193,7 @@ const unminifySource = false;
     app.get(/\/(api\/)?game.min.js/, async (req, res) => {
         if (req.query.version && typeof req.query.version !== "string")
             return res.status(400).send("Invalid version specified.");
-        const version = req.query.version ?? gs.gameClientVersion;
+        const version = req.query.version || gs.gameClientVersion;
         try {
             res.type("js").send(`// game.min.js v${version}\n\n` +
                 (unminifySource ? js_beautify_1.default : (_) => _)(await (0, util_1.getPatchedGameFile)(version)));
@@ -227,5 +227,5 @@ const unminifySource = false;
     app.get("/stats", (req, res) => {
         res.send(stats);
     });
-    const addr = app.listen(process.env.PORT ?? 1337, () => console.log(`P-NP has started on :${typeof addr === "string" ? addr : addr?.port ?? ""}!`)).address();
+       const addr = app.listen(process.env.PORT || 1337, () => console.log(`P-NP has started on :${typeof addr === "string" ? addr : addr.port || ""}!`)).address();
 })();
