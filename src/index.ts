@@ -20,6 +20,33 @@ const unminifySource = false;
 		next()
 	})
 	
+	let toAdd = []
+	let data = JSON.parse(fs.readFileSync('./hits.json', 'utf8'))
+	let validate = (a: any, b: any, type: any) => {
+
+		switch (type) {
+
+			case "day":
+				return a.getFullYear() === b.getFullYear() &&
+					a.getMonth() === b.getMonth() &&
+					a.getDate() === b.getDate();
+
+				break;
+
+			case "week":
+				return a.getFullYear() === b.getFullYear() &&
+					a.getMonth() === b.getMonth() &&
+					Math.ceil((a.getDate() - 1 - a.getDay()) / 7) === Math.ceil((b.getDate() - 1 - b.getDay()) / 7);
+				break;
+			case "month":
+				return a.getFullYear() === b.getFullYear() &&
+					a.getMonth() === b.getMonth()
+				break;
+		}
+
+
+	}
+	
 	app.get(/\/(api\/)?game.min.js/, async (req, res) => {
 		if (req.query.version && typeof req.query.version !== "string")
 			return res.status(400).send("Invalid version specified.");
