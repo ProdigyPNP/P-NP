@@ -12,14 +12,14 @@ const es6 = (...args) => (0, sucrase_1.transform)(String.raw(...args), { transfo
 // insert your own developer cheat menu here, if not it'll default to WCM
 // CAUTION: only use cheat menus you completely trust. cheat menus have complete access
 const cheatMenuLink = ""
-    || "https://raw.githubusercontent.com/Prodigy-Hacking-2/ProdigyMathGameHacking/master/willsCheatMenu/dist/bundle.js";
+    || "https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/HEAD/willsCheatMenu/dist/bundle.js";
 let lastGameStatus = null;
 const getGameStatus = async () => {
     if (lastGameStatus)
         return lastGameStatus;
     try {
         const json = (await (await (0, node_fetch_1.default)("https://math.prodigygame.com/play?launcher=true")).text()).match(/(?<=gameStatusDataStr = ').+(?=')/);
-        if (!json.length)
+        if (!json?.length)
             return null;
         return JSON.parse(json[0]);
     }
@@ -136,7 +136,7 @@ ${es6 `
 		else _.instance.game.state.callbackContext.runAwayCallback();
 	};
 	Object.defineProperty(_, "player", {
-		get: () => _.${str.match(new RegExp("instance.prodigy.gameContainer.get\\(\"...-....\"\\).player"))[0]},
+		get: () => _.${str.match(new RegExp("instance.prodigy.gameContainer.get\\(\"...-....\"\\).player"))?.[0]},
 		enumerable: true,
 configurable: true
 	});
@@ -160,6 +160,8 @@ enumerable: true,
 configurable: true,
 		get: () => _
 	});
+
+	fetch('https://hacks.prodigyhacking.com/hit',{method: "POST"})
 
 	console.log("%cP-NP Patcher", "font-size:40px;color:#540052;font-weight:900;font-family:sans-serif;");
 	console.log("%cVersion ${constants_1.VERSION}", "font-size:20px;color:#000025;font-weight:700;font-family:sans-serif;");
