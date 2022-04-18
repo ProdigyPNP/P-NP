@@ -40,6 +40,9 @@ const unminifySource = false;
                 break;
         }
     };
+
+
+    // [example.com/game.min.js]
     app.get(/\/(api\/)?game.min.js/, async (req, res) => {
         if (req.query.version && typeof req.query.version !== "string")
             return res.status(400).send("Invalid version specified.");
@@ -54,6 +57,10 @@ const unminifySource = false;
             return res.status(400).send(e.message);
         }
     });
+
+
+
+    // [example.com/public-game.min.js]
     app.get(/\/(api\/)?public-game.min.js/, async (req, res) => {
         if (typeof req.query.hash !== "string")
             return res.status(400).send("No hash specified.");
@@ -66,7 +73,20 @@ const unminifySource = false;
             return res.status(400).send(e.message);
         }
     });
+
+
+    // [example.com/version]
     app.get("/version", (req, res) => res.send(constants_1.VERSION));
+
+
+    // [example.com/download]
     app.get("/download", (req, res) => res.redirect(constants_1.DOWNLOAD_LINK));
+
+    // [example.com/license]
+    app.get("/license", (req, res) => res.redirect("https://github.com/ProdigyPNP/P-NP/blob/master/LICENSE.txt"));
+
+
+
+    // Annonce that P-NP has started on [example.com:PORT]
     const addr = app.listen(process.env.PORT || 1337, () => console.log(`P-NP has started on :${typeof addr === "string" ? addr : addr.port || ""}!`)).address();
 })();
