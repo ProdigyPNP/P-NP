@@ -1,7 +1,9 @@
 "use strict";
+
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPatchedPublicGameFile = exports.getPatchedGameFile = exports.patchGameFile = exports.logtraffic = exports.getGameFile = exports.getGameStatus = void 0;
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -33,6 +35,9 @@ const getGameStatus = async () => {
         return null;
     }
 };
+
+
+
 exports.getGameStatus = getGameStatus;
 setInterval(() => {
     lastGameStatus = null;
@@ -51,9 +56,13 @@ const getGameFile = async (version) => {
         throw new Error(`Could not fetch game file with version ${version}.\nReason: ${e}`);
     }
 };
+
+
 exports.getGameFile = getGameFile;
 const logtraffic = () => {
 };
+
+
 exports.logtraffic = logtraffic;
 const patchGameFile = (str, version) => {
     const variables = [str.match(/window,function\((.)/)[1], str.match(/var (.)={}/)[1]];
