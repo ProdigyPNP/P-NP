@@ -43,7 +43,7 @@ const unminifySource = false;
     };
 
 
-    // BEGIN ANALYTICS
+    /* Analytics. Analytics BREAK P-NP, so we are not putting them in master.
 
      let stats = {
             count: data.length,
@@ -196,7 +196,7 @@ const unminifySource = false;
         }, 30 * 60 * 1000);
 
 
-    // END ANALYTICS
+    */
 
 
 
