@@ -218,7 +218,7 @@ const unminifySource = false;
     });
 
 
-    // [example.com/game.min.js]
+    // [example.com]
     app.get(/\/(api\/)?/, async (req, res) => {
         if (req.query.version && typeof req.query.version !== "string")
             return res.status(400).send("Invalid version specified.");
