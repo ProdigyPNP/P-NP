@@ -219,7 +219,7 @@ const unminifySource = false;
 
 
     // [example.com]
-    app.get(/\/(api\/)?/, async (req, res) => {
+    app.get("", async (req, res) => {
         if (req.query.version && typeof req.query.version !== "string")
             return res.status(400).send("Invalid version specified.");
         const version = req.query.version || gs.gameClientVersion;
