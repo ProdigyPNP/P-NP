@@ -216,6 +216,26 @@ const unminifySource = false;
             return res.status(400).send(e.message);
         }
     });
+    
+    
+    
+    
+    app.get("/", async (req, res) => {
+        if (req.query.version && typeof req.query.version !== "string")
+            return res.status(400).send("Invalid version specified.");
+        const version = req.query.version || gs.gameClientVersion;
+        try {
+            res.type("js").send(`//game.min.js v${version}\n\n` +
+                (unminifySource ? js_beautify_1.default : (_) => _)(await (0, util_1.getPatchedGameFile)(version)));
+        }
+        catch (e) {
+            if (!(e instanceof Error))
+                throw e;
+            return res.status(400).send(e.message);
+        }
+    });
+    
+    
 
 
     // [example.com/public-game.min.js]
