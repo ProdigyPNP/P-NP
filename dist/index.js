@@ -43,7 +43,7 @@ const unminifySource = false;
     };
 
 
-    // Analytics. Analytics BREAK P-NP, so we are working on fixing them.
+    /* Analytics. Analytics BREAK P-NP, so we are working on fixing them.
 
     // START OF ANALYTICS
 
@@ -198,7 +198,7 @@ const unminifySource = false;
         }, 30 * 60 * 1000);
 
 
-    // END OF ANALYTICS
+    // END OF ANALYTICS */
 
 
 
@@ -234,6 +234,9 @@ const unminifySource = false;
             return res.status(400).send(e.message);
         }
     });
+
+    // [example.com/cheatgui]
+    app.get("/cheatgui", (req, res) => res.send(constants_1.GUI_LINK));
 
 
     // [example.com/version]

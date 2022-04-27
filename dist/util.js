@@ -15,8 +15,7 @@ const es6 = (...args) => (0, sucrase_1.transform)(String.raw(...args), { transfo
 
 // insert your own developer cheat menu here, if not it'll default to WCM
 // CAUTION: only use cheat menus you completely trust. cheat menus have complete access
-const cheatMenuLink = ""
-    || "https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/master/willsCheatMenu/dist/bundle.js";
+const cheatMenuLink = constants_1.GUI_LINK;
 
 
 
