@@ -16,9 +16,9 @@ function toHits () {
     // @ts-ignore
     var final = "";
     fs.readFile('hits.json', 'utf8', function(err, data : string) {
-        var contents : number = Number(data);
-        var incremented : number = contents + 1;
-        var toStr : string = incremented.toString();
+        const contents : number = Number(data);
+        const incremented : number = contents + 1;
+        const toStr : string = incremented.toString();
         final = toStr;
         fs.writeFile('hits.json', final, (error) => {})
     });
