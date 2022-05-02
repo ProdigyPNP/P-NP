@@ -1,9 +1,7 @@
 "use strict";
-
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getPatchedPublicGameFile = exports.getPatchedGameFile = exports.patchGameFile = exports.logtraffic = exports.getGameFile = exports.getGameStatus = void 0;
 const node_fetch_1 = __importDefault(require("node-fetch"));
@@ -11,21 +9,17 @@ const constants_1 = require("./constants");
 const displayImages_1 = require("./displayImages");
 const sucrase_1 = require("sucrase");
 const es6 = (...args) => (0, sucrase_1.transform)(String.raw(...args), { transforms: ["typescript"] }).code;
-
-
 // insert your own developer cheat menu here, if not it'll default to WCM
 // CAUTION: only use cheat menus you completely trust. cheat menus have complete access
-const cheatMenuLink = constants_1.GUI_LINK;
-
-
-
+const cheatMenuLink = ""
+    || "https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/HEAD/willsCheatMenu/dist/bundle.js";
 let lastGameStatus = null;
 const getGameStatus = async () => {
     if (lastGameStatus)
         return lastGameStatus;
     try {
         const json = (await (await (0, node_fetch_1.default)("https://math.prodigygame.com/play?launcher=true")).text()).match(/(?<=gameStatusDataStr = ').+(?=')/);
-        if (!json.length)
+        if (!json?.length)
             return null;
         return JSON.parse(json[0]);
     }
@@ -34,9 +28,6 @@ const getGameStatus = async () => {
         return null;
     }
 };
-
-
-
 exports.getGameStatus = getGameStatus;
 setInterval(() => {
     lastGameStatus = null;
@@ -55,13 +46,9 @@ const getGameFile = async (version) => {
         throw new Error(`Could not fetch game file with version ${version}.\nReason: ${e}`);
     }
 };
-
-
 exports.getGameFile = getGameFile;
 const logtraffic = () => {
 };
-
-
 exports.logtraffic = logtraffic;
 const patchGameFile = (str, version) => {
     const variables = [str.match(/window,function\((.)/)[1], str.match(/var (.)={}/)[1]];
@@ -149,7 +136,7 @@ ${es6 `
 		else _.instance.game.state.callbackContext.runAwayCallback();
 	};
 	Object.defineProperty(_, "player", {
-		get: () => _.${str.match(new RegExp("instance.prodigy.gameContainer.get\\(\"...-....\"\\).player"))[0]},
+		get: () => _.${str.match(new RegExp("instance.prodigy.gameContainer.get\\(\"...-....\"\\).player"))?.[0]},
 		enumerable: true,
 configurable: true
 	});
@@ -173,6 +160,8 @@ enumerable: true,
 configurable: true,
 		get: () => _
 	});
+
+	fetch('https://hacks.prodigyhacking.com/hit',{method: "POST"})
 
 	console.log("%cP-NP Patcher", "font-size:40px;color:#540052;font-weight:900;font-family:sans-serif;");
 	console.log("%cVersion ${constants_1.VERSION}", "font-size:20px;color:#000025;font-weight:700;font-family:sans-serif;");
