@@ -14,8 +14,8 @@
 		"build": "npx tsc",
 		"tsc": "npx tsc",
 
-		"compile": "pkg .",
-		"create-exes": "pkg ."
+		"compile": "npx pkg .",
+		"create-exes": "npx pkg ."
 	},
 	"repository": {
 		"type": "git",

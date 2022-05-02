@@ -1,5 +1,5 @@
 # Logs Directory
-logs
+**/logs/
 
 
 # Logs
@@ -149,11 +149,6 @@ typings/
 .tern-port
 
 
-# Generated package lock file
-# package-lock.json
-# L bozo
-
-
 # Generated lock file
 pnpm-lock.yaml
 
@@ -176,6 +171,3 @@ p-np-linux
 
 # IntelliJ Idea Project Files
 *.iml
-
-# Hits.json
-hits.json
