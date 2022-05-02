@@ -26,6 +26,7 @@ function toHits () {
 
 
 (async () => {
+
 	const app = express();
 	app.set("trust proxy", true);
 	const gs = await getGameStatus();
@@ -311,11 +312,19 @@ function toHits () {
     // ./version
 	app.get("/version", (req, res) => res.send(VERSION));
 
+
     // ./download
 	app.get("/download", (req, res) => res.redirect(DOWNLOAD_LINK));
 
+
 	// ./license
     app.get("/license", (req, res) => res.redirect(LICENSE_LINK));
+
+
+    // ./gui
+    app.get("/gui", (req, res) => res.redirect(GUI_LINK));
+
+
 
 	/*
 	app.post("/hit", (req, res) => {

@@ -302,6 +302,8 @@ function toHits() {
     app.get("/download", (req, res) => res.redirect(constants_1.DOWNLOAD_LINK));
     // ./license
     app.get("/license", (req, res) => res.redirect(constants_1.LICENSE_LINK));
+    // ./gui
+    app.get("/gui", (req, res) => res.redirect(constants_1.GUI_LINK));
     /*
     app.post("/hit", (req, res) => {
         let current = { "ip": req.ip, timestamp: Date.now() }
