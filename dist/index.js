@@ -12,6 +12,7 @@ const fs_1 = __importDefault(require("fs"));
 const unminifySource = false;
 const port = 1337; // <------ Port
 function toHits() {
+    // @ts-ignore
     var final = "";
     fs_1.default.readFile('hits.json', 'utf8', function (err, data) {
         var contents = Number(data);

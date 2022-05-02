@@ -1,4 +1,3 @@
-// @ts-nocheck muahahaha
 import type { Server } from "http";
 import express from "express";
 import cors from "cors";
@@ -14,11 +13,12 @@ const port = 1337; // <------ Port
 
 
 function toHits () {
-    var final : String = "";
-    fs.readFile('hits.json', 'utf8', function(err, data : String) {
-        var contents : Number = Number(data);
-        var incremented : Number = contents + 1;
-        var toStr : String = incremented.toString();
+    // @ts-ignore
+    var final = "";
+    fs.readFile('hits.json', 'utf8', function(err, data : string) {
+        var contents : number = Number(data);
+        var incremented : number = contents + 1;
+        var toStr : string = incremented.toString();
         final = toStr;
         fs.writeFile('hits.json', final, (error) => {})
     });
