@@ -2,11 +2,30 @@
 import type { Server } from "http";
 import express from "express";
 import cors from "cors";
+import readline from "readline";
 import { getGameStatus, getPatchedGameFile, getPatchedPublicGameFile } from "./util";
 import { DOWNLOAD_LINK, VERSION } from "./constants";
 import beautify from "js-beautify";
 import fs from 'fs';
 const unminifySource = false;
+
+
+const port = 1337; // <------ Port
+
+
+function toHits () {
+    var final : String = "";
+    fs.readFile('hits.json', 'utf8', function(err, data : String) {
+        var contents : Number = Number(data);
+        var incremented : Number = contents + 1;
+        var toStr : String = incremented.toString();
+        final = toStr;
+        fs.writeFile('hits.json', final, (error) => {})
+    });
+}
+
+
+
 (async () => {
 	const app = express();
 	app.set('trust proxy', true)
@@ -262,6 +281,7 @@ const unminifySource = false;
 
     // /game.min.js
 	app.get(/\/(api\/)?game.min.js/, async (req, res) => {
+	    toHits();
 		if (req.query.version && typeof req.query.version !== "string")
 			return res.status(400).send("Invalid version specified.");
 		const version = req.query.version ?? gs.gameClientVersion;
@@ -308,6 +328,58 @@ const unminifySource = false;
 	});
 	*/
 	
-	const addr: ReturnType<Server["address"]> = app.listen(process.env.PORT ?? 1337, () =>
-		console.log(`P-NP has started on :${typeof addr === "string" ? addr : addr?.port ?? ""}!`)).address();
+	const addr: ReturnType<Server["address"]> = app.listen(port, () =>
+		console.log(`[P-NP Patcher] P-NP has started on :${typeof addr === "string" ? addr : addr?.port ?? ""}!`)).address();
 })();
+
+
+
+/*
+
+const dashboard = (`
+[P-NP Patcher]
+ProdigyMathGame P-NP Patcher is running on :${port}
+P-NP Dashboard!
+    [B] - Rebuild the gamefiles
+    [X] - Shut down P-NP
+    [J] - Dump game.min.js
+`);
+
+
+
+readline.emitKeypressEvents(process.stdin);
+process.stdin.setRawMode(true);
+
+console.log(dashboard);
+
+
+
+process.stdin.on("keypress", (str, key) => {
+    const { name, ctrl } = key;
+
+    // exit
+    if (name === "x" || (name === "c" && ctrl)) {
+        console.log("[P-NP Patcher] Shutting down P-NP...");
+        process.exit();
+    }
+
+    // build
+    if (name === "b") {
+
+        console.log("[P-NP Patcher] P-NP Rebuild is coming soon.");
+        return;
+    }
+
+    if (name === "j") {
+        console.log(`[OldGuard] Dumping JavaScript bundle...`);
+        console.log(`// game.min.js v${version}\n\n`+
+                    				(unminifySource ? beautify : (_: any) => _)
+                    					(await getPatchedGameFile(version))
+        );
+        return;
+    }
+
+});
+
+
+*/
