@@ -113,3 +113,23 @@ npm install
 npm run create-exes
 ```
 <br>
+
+
+## Running P-NP on Repl.it
+Repl is a bit wacky, since it uses a very old version of Node.js. This makes P-NP throw an error, but there is a fix.
+
+1. Make a [new **Repl**](https://repl.it/new).
+2. Click **Import from GitHub**.
+3. Paste this in GitHub URL: ``https://github.com/ProdigyPNP/P-NP.git``.
+4. Click **+ Import from GitHub**.
+5. If you get a popup from Repl saying "configure the start button", click **OK**.
+6. On the right half of the screen, there should be a tab that says **Shell**. Click it.
+7. Paste the code snippet below into the shell. Once it's finished, click the Start button.
+
+```sh
+node -v
+npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_modules/node && export PATH=$(pwd)/node_modules/node/bin:$PATH
+node -v
+npm install
+
+```
