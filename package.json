@@ -1,11 +1,20 @@
 {
-	"name": "P-NP",
+	"name": "p-np",
 	"version": "2.1.9",
 	"description": "Modifies and serves Prodigy's game files",
 	"main": "index.js",
 	"scripts": {
-		"start": "node dist/",
-		"build": "tsc",
+		"setup": "npm install",
+
+		"quickstart": "npm install && node dist",
+
+		"start": "node dist",
+		"server": "node dist",
+
+		"build": "npx tsc",
+		"tsc": "npx tsc",
+
+		"compile": "pkg .",
 		"create-exes": "pkg ."
 	},
 	"repository": {
