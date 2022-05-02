@@ -5,7 +5,7 @@ import readline from "readline";
 import { getGameStatus, getPatchedGameFile, getPatchedPublicGameFile } from "./util";
 import { DOWNLOAD_LINK, VERSION } from "./constants";
 import beautify from "js-beautify";
-import fs from 'fs';
+import fs from "fs";
 const unminifySource = false;
 
 
@@ -15,12 +15,12 @@ const port = 1337; // <------ Port
 function toHits () {
     // @ts-ignore
     var final = "";
-    fs.readFile('hits.json', 'utf8', function(err, data : string) {
+    fs.readFile("hits.json", "utf8", function(err, data : string) {
         const contents : number = Number(data);
         const incremented : number = contents + 1;
         const toStr : string = incremented.toString();
         final = toStr;
-        fs.writeFile('hits.json', final, (error) => {})
+        fs.writeFile("hits.json", final, (error) => {});
     });
 }
 
@@ -28,15 +28,15 @@ function toHits () {
 
 (async () => {
 	const app = express();
-	app.set('trust proxy', true)
+	app.set("trust proxy", true);
 	const gs = await getGameStatus();
 
 	if (!gs) throw new Error("The game status request failed.");
 
 	app.use(cors());
 	app.use((req, res, next) => {
-		res.set('Cache-Control', 'no-store')
-		next()
+		res.set("Cache-Control", "no-store");
+		next();
 	})
 
 
