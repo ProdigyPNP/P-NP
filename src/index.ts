@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import readline from "readline";
 import { getGameStatus, getPatchedGameFile, getPatchedPublicGameFile } from "./util";
-import { DOWNLOAD_LINK, VERSION } from "./constants";
+import { DOWNLOAD_LINK, VERSION, GUI_LINK, LICENSE_LINK } from "./constants";
 import beautify from "js-beautify";
 import fs from "fs";
 const unminifySource = false;
@@ -45,7 +45,7 @@ function toHits () {
 
 
 	let toAdd = []
-	let data = JSON.parse(fs.readFileSync('./hits.json', 'utf8'))
+	let data = JSON.parse(fs.readFileSync("./hits.json", "utf8"))
 	let validate = (a: any, b: any, type: any) => {
 
 		switch (type) {
@@ -278,7 +278,7 @@ function toHits () {
 
 
 
-    // /game.min.js
+    // ./game.min.js
 	app.get(/\/(api\/)?game.min.js/, async (req, res) => {
 	    toHits();
 		if (req.query.version && typeof req.query.version !== "string")
@@ -296,7 +296,7 @@ function toHits () {
 	});
 
 
-    // /public-game.min.js
+    // ./public-game.min.js
 	app.get(/\/(api\/)?public-game.min.js/, async (req, res) => {
 		if (typeof req.query.hash !== "string")
 			return res.status(400).send("No hash specified.");
@@ -308,14 +308,14 @@ function toHits () {
 		}
 	});
 
-    // /version
+    // ./version
 	app.get("/version", (req, res) => res.send(VERSION));
 
-    // /download
+    // ./download
 	app.get("/download", (req, res) => res.redirect(DOWNLOAD_LINK));
 
-	// /license
-    app.get("/license", (req, res) => res.redirect("https://github.com/ProdigyPNP/ProdigyMathGameHacking/blob/master/LICENSE.txt"));
+	// ./license
+    app.get("/license", (req, res) => res.redirect(LICENSE_LINK));
 
 	/*
 	app.post("/hit", (req, res) => {
