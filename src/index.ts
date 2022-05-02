@@ -314,6 +314,9 @@ function toHits () {
     // /download
 	app.get("/download", (req, res) => res.redirect(DOWNLOAD_LINK));
 
+	// /license
+    app.get("/license", (req, res) => res.redirect("https://github.com/ProdigyPNP/ProdigyMathGameHacking/blob/master/LICENSE.txt"));
+
 	/*
 	app.post("/hit", (req, res) => {
 		let current = { "ip": req.ip, timestamp: Date.now() }
