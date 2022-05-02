@@ -13,7 +13,6 @@ const port = 1337; // <------ Port
 
 
 function toHits () {
-    // @ts-ignore
     var final = "";
     fs.readFile("hits.json", "utf8", function(err, data : string) {
         const contents : number = Number(data);

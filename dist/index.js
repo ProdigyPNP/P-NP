@@ -12,25 +12,24 @@ const fs_1 = __importDefault(require("fs"));
 const unminifySource = false;
 const port = 1337; // <------ Port
 function toHits() {
-    // @ts-ignore
     var final = "";
-    fs_1.default.readFile('hits.json', 'utf8', function (err, data) {
-        var contents = Number(data);
-        var incremented = contents + 1;
-        var toStr = incremented.toString();
+    fs_1.default.readFile("hits.json", "utf8", function (err, data) {
+        const contents = Number(data);
+        const incremented = contents + 1;
+        const toStr = incremented.toString();
         final = toStr;
-        fs_1.default.writeFile('hits.json', final, (error) => { });
+        fs_1.default.writeFile("hits.json", final, (error) => { });
     });
 }
 (async () => {
     const app = (0, express_1.default)();
-    app.set('trust proxy', true);
+    app.set("trust proxy", true);
     const gs = await (0, util_1.getGameStatus)();
     if (!gs)
         throw new Error("The game status request failed.");
     app.use((0, cors_1.default)());
     app.use((req, res, next) => {
-        res.set('Cache-Control', 'no-store');
+        res.set("Cache-Control", "no-store");
         next();
     });
     /*
