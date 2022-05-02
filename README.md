@@ -14,12 +14,9 @@ P-NP modifies and serves Prodigy's game files.
 4. Copy and paste the code snippet below to automatically run P-NP.
 
 ```sh
-cd Documents
 git clone https://github.com/ProdigyPNP/P-NP.git
 cd P-NP
 npm install
-# npm run build
-# We'll return build soon, it's a bit of a mess right now as we only have the dist.
 npm start
 ```
 <br>
@@ -34,12 +31,9 @@ npm start
 4. Copy and paste the code snippet below to automatically run P-NP.
 
 ```sh
-cd Documents
 git clone https://github.com/ProdigyPNP/P-NP.git
 cd P-NP
 npm install
-# npm run build
-# We'll return build soon, it's a bit of a mess right now as we only have the dist.
 npm start
 ```
 <br>
@@ -57,8 +51,6 @@ npm start
 git clone https://github.com/ProdigyPNP/P-NP
 cd P-NP
 npm install
-# npm run build
-# We'll return build soon, it's a bit of a mess right now as we only have the dist.
 node dist
 ```
 <br><br>
@@ -75,7 +67,6 @@ node dist
 4. Copy and paste the code snippet below to automatically build P-NP's binaries.
 
 ```sh
-cd Documents
 git clone https://github.com/ProdigyPNP/P-NP.git
 cd P-NP
 npm install
@@ -95,7 +86,6 @@ npm run create-exes
 4. Copy and paste the code snippet below to automatically build P-NP's binaries.
 
 ```sh
-cd Documents
 git clone https://github.com/ProdigyPNP/P-NP.git
 cd P-NP
 npm install
