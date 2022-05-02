@@ -176,3 +176,6 @@ p-np-linux
 
 # IntelliJ Idea Project Files
 *.iml
+
+# Hits.json
+hits.json
