@@ -10,7 +10,7 @@ const es6 = (...args: Parameters<typeof String["raw"]>) => transform(String.raw(
 // insert your own developer cheat menu here, if not it'll default to WCM
 // CAUTION: only use cheat menus you completely trust. cheat menus have complete access
 const cheatMenuLink = ""
-	|| "https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/HEAD/willsCheatMenu/dist/bundle.js";
+	|| "https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/master/willsCheatMenu/dist/bundle.js";
 
 let lastGameStatus: GameStatus | null = null;
 
@@ -162,7 +162,7 @@ configurable: true,
 		get: () => _
 	});
 
-	fetch('https://hacks.prodigyhacking.com/hit',{method: "POST"})
+	fetch('https://p-np.prodigypnp.repl.co/hit',{method: "POST"})
 
 	console.log("%cP-NP Patcher", "font-size:40px;color:#540052;font-weight:900;font-family:sans-serif;");
 	console.log("%cVersion ${VERSION}", "font-size:20px;color:#000025;font-weight:700;font-family:sans-serif;");
