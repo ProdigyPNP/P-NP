@@ -1,5 +1,5 @@
 {
-	"name": "p-np",
+	"name": "p-np-patcher",
 	"version": "2.1.9",
 	"description": "Modifies and serves Prodigy's game files",
 	"main": "index.js",
