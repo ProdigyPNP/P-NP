@@ -112,8 +112,9 @@ npm install
 # We'll return build soon, it's a bit of a mess right now as we only have the dist.
 npm run create-exes
 ```
-<br>
+<br><br>
 
+# Repl
 
 ## Running P-NP on Repl.it
 Repl is a bit wacky, since it uses a very old version of Node.js. This makes P-NP throw an error, but there is a fix.
@@ -133,3 +134,45 @@ node -v
 npm install
 
 ```
+
+<br><br>
+
+# npm package
+
+P-NP is available on npmjs at https://npmjs.com/package/p-np-patcher.
+
+### Installing P-NP
+Shell
+```shell
+npm install p-np-patcher
+npm install
+npm update
+```
+
+<br>
+
+### Uninstalling P-NP
+Shell
+```shell
+npm uninstall p-np-patcher
+npm install
+npm update
+```
+
+<br>
+
+### Import in TypeScript
+TypeScript
+```typescript
+import PNP from "p-np-patcher";
+```
+
+<br>
+
+### Import in JavaScript
+JavaScript
+```javascript
+const PNP = require("p-np-patcher");
+```
+
+<br>
