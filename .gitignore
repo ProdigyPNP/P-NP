@@ -154,14 +154,17 @@ pnpm-lock.yaml
 
 
 # P-NP MacOS Binary
+p-np-patcher-macos
 p-np-macos
 
 
 # P-NP Windows Binary
+p-np-patcher-win.exe
 p-np-win.exe
 
 
 # P-NP Linux Binary
+p-np-patcher-linux
 p-np-linux
 
 
@@ -171,3 +174,4 @@ p-np-linux
 
 # IntelliJ Idea Project Files
 *.iml
+

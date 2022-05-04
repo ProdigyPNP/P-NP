@@ -325,6 +325,23 @@ function toHits () {
     app.get("/gui", (req, res) => res.redirect(GUI_LINK));
 
 
+    // ./gameVersion
+    	app.get("/gameVersion", async (req, res) => {
+    		if (req.query.version && typeof req.query.version !== "string")
+    			return res.status(400).send("Invalid version specified.");
+    		const version = req.query.version ?? gs.gameClientVersion;
+    		try {
+    			res.send(version);
+    		} catch (e: unknown) {
+    			if (!(e instanceof Error)) throw e;
+    			return res.status(400).send(e.message);
+    		}
+    	});
+
+
+
+
+
 
 	/*
 	app.post("/hit", (req, res) => {

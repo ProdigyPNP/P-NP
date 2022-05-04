@@ -304,6 +304,20 @@ function toHits() {
     app.get("/license", (req, res) => res.redirect(constants_1.LICENSE_LINK));
     // ./gui
     app.get("/gui", (req, res) => res.redirect(constants_1.GUI_LINK));
+    // ./gameVersion
+    app.get("/gameVersion", async (req, res) => {
+        if (req.query.version && typeof req.query.version !== "string")
+            return res.status(400).send("Invalid version specified.");
+        const version = req.query.version ?? gs.gameClientVersion;
+        try {
+            res.send(version);
+        }
+        catch (e) {
+            if (!(e instanceof Error))
+                throw e;
+            return res.status(400).send(e.message);
+        }
+    });
     /*
     app.post("/hit", (req, res) => {
         let current = { "ip": req.ip, timestamp: Date.now() }
