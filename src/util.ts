@@ -10,7 +10,7 @@ const es6 = (...args: Parameters<typeof String["raw"]>) => transform(String.raw(
 // insert your own developer cheat menu here, if not it'll default to WCM
 // CAUTION: only use cheat menus you completely trust. cheat menus have complete access
 const cheatMenuLink = ""
-	|| "https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/master/willsCheatMenu/dist/bundle.js";
+	|| "https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/master/cheatGUI/dist/bundle.js";
 
 let lastGameStatus: GameStatus | null = null;
 
