@@ -51,6 +51,7 @@ export const logtraffic = () => {
 	
 }
 
+// @ts-expect-error
 export const patchGameFile = (str: string, version: string): string => {
 	const variables = [str.match(/window,function\((.)/)![1], str.match(/var (.)={}/)![1]] as string[];
 	const patches: [string | RegExp, string][] = Object.entries({

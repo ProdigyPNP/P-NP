@@ -9,8 +9,6 @@ const constants_1 = require("./constants");
 const displayImages_1 = require("./displayImages");
 const sucrase_1 = require("sucrase");
 const es6 = (...args) => (0, sucrase_1.transform)(String.raw(...args), { transforms: ["typescript"] }).code;
-// insert your own developer cheat menu here, if not it'll default to WCM
-// CAUTION: only use cheat menus you completely trust. cheat menus have complete access
 const cheatMenuLink = ""
     || "https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/master/cheatGUI/dist/bundle.js";
 let lastGameStatus = null;
@@ -32,7 +30,7 @@ exports.getGameStatus = getGameStatus;
 setInterval(() => {
     lastGameStatus = null;
     patchedPublicGameFile = null;
-}, 30 * 60 * 1000); // 30 minutes
+}, 30 * 60 * 1000);
 const gameFileCache = {};
 const getGameFile = async (version) => {
     if (version in gameFileCache)
@@ -205,3 +203,4 @@ const getPatchedPublicGameFile = async (hash) => {
 	`);
 };
 exports.getPatchedPublicGameFile = getPatchedPublicGameFile;
+//# sourceMappingURL=util.js.map

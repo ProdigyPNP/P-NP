@@ -1,25 +1,30 @@
-import type { Server } from "http";
-import express from "express";
-import cors from "cors";
-import readline from "readline";
-import { getGameStatus, getPatchedGameFile, getPatchedPublicGameFile } from "./util";
-import { DOWNLOAD_LINK, VERSION, GUI_LINK, LICENSE_LINK } from "./constants";
-import beautify from "js-beautify";
-import fs from "fs";
-const unminifySource = false;
+import type { Server } from "http"; // Server typings
+import express from "express"; // Express server
+import cors from "cors"; // CORS
+import { getGameStatus, getPatchedGameFile, getPatchedPublicGameFile } from "./util"; // Gamefile patchers
+import { DOWNLOAD_LINK, VERSION, GUI_LINK, LICENSE_LINK } from "./constants"; // Constants
+import beautify from "js-beautify"; // JavaScript beautifier
+import fs from "fs"; // File system
+const unminifySource = false; // Unminify source code
 
 
 const port = 1337; // <------ Port
 
 
+// Increment hits.json by 1
 function toHits () {
     var final = "";
     fs.readFile("hits.json", "utf8", function(err, data : string) {
+
+        if (err) return console.error(err);
+
         const contents : number = Number(data);
         const incremented : number = contents + 1;
         const toStr : string = incremented.toString();
         final = toStr;
-        fs.writeFile("hits.json", final, (error) => {});
+        fs.writeFile("hits.json", final, (err) => {
+            if (err) return console.error(err);
+        });
     });
 }
 
@@ -34,6 +39,7 @@ function toHits () {
 	if (!gs) throw new Error("The game status request failed.");
 
 	app.use(cors());
+	// @ts-expect-error
 	app.use((req, res, next) => {
 		res.set("Cache-Control", "no-store");
 		next();
@@ -280,6 +286,7 @@ function toHits () {
 
 
     // ./game.min.js
+    // @ts-expect-error
 	app.get(/\/(api\/)?game.min.js/, async (req, res) => {
 	    toHits();
 		if (req.query.version && typeof req.query.version !== "string")
@@ -298,6 +305,7 @@ function toHits () {
 
 
     // ./public-game.min.js
+    // @ts-expect-error
 	app.get(/\/(api\/)?public-game.min.js/, async (req, res) => {
 		if (typeof req.query.hash !== "string")
 			return res.status(400).send("No hash specified.");
@@ -310,23 +318,28 @@ function toHits () {
 	});
 
     // ./version
+    // @ts-expect-error
 	app.get("/version", (req, res) => res.send(VERSION));
 
 
     // ./download
+    // @ts-expect-error
 	app.get("/download", (req, res) => res.redirect(DOWNLOAD_LINK));
 
 
 	// ./license
+	// @ts-expect-error
     app.get("/license", (req, res) => res.redirect(LICENSE_LINK));
 
 
     // ./gui
+    // @ts-expect-error
     app.get("/gui", (req, res) => res.redirect(GUI_LINK));
 
 
     // ./gameVersion
-    	app.get("/gameVersion", async (req, res) => {
+    // @ts-expect-error
+    app.get("/gameVersion", async (req, res) => {
     		if (req.query.version && typeof req.query.version !== "string")
     			return res.status(400).send("Invalid version specified.");
     		const version = req.query.version ?? gs.gameClientVersion;
