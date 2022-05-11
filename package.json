@@ -21,7 +21,7 @@
 		"type": "git",
 		"url": "git+https://github.com/ProdigyPNP/P-NP.git"
 	},
-	"author": "",
+	"author": "ProdigyPNP",
 	"license": "MPL-2.0",
 	"bugs": {
 		"url": "https://github.com/ProdigyPNP/P-NP/issues"
