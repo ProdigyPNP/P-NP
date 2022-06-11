@@ -319,7 +319,7 @@ function toHits () {
 
     // ./version
     // @ts-expect-error
-	app.get("/version", (req, res) => res.send(VERSION));
+	app.get("/version", (req, res) => res.type("txt").send(VERSION.valueOf()));
 
 
     // ./download
@@ -342,9 +342,9 @@ function toHits () {
     app.get("/gameVersion", async (req, res) => {
     		if (req.query.version && typeof req.query.version !== "string")
     			return res.status(400).send("Invalid version specified.");
-    		const version = req.query.version ?? gs.gameClientVersion;
+    		const version : String = req.query.version ?? gs.gameClientVersion;
     		try {
-    			res.send(version);
+    			res.type("txt").send(version.valueOf());
     		} catch (e: unknown) {
     			if (!(e instanceof Error)) throw e;
     			return res.status(400).send(e.message);

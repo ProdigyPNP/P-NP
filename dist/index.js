@@ -64,7 +64,7 @@ function toHits() {
             return res.status(400).send(e.message);
         }
     });
-    app.get("/version", (req, res) => res.send(constants_1.VERSION));
+    app.get("/version", (req, res) => res.type("txt").send(constants_1.VERSION.valueOf()));
     app.get("/download", (req, res) => res.redirect(constants_1.DOWNLOAD_LINK));
     app.get("/license", (req, res) => res.redirect(constants_1.LICENSE_LINK));
     app.get("/gui", (req, res) => res.redirect(constants_1.GUI_LINK));
@@ -73,7 +73,7 @@ function toHits() {
             return res.status(400).send("Invalid version specified.");
         const version = req.query.version ?? gs.gameClientVersion;
         try {
-            res.send(version);
+            res.type("txt").send(version.valueOf());
         }
         catch (e) {
             if (!(e instanceof Error))
