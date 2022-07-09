@@ -5,15 +5,11 @@
 	"main": "index.js",
 	"scripts": {
 		"setup": "npm install",
-
 		"quickstart": "npm install && node dist",
-
 		"start": "node dist",
 		"server": "node dist",
-
 		"build": "npx tsc",
 		"tsc": "npx tsc",
-
 		"compile": "npx pkg .",
 		"create-exes": "npx pkg ."
 	},
@@ -59,6 +55,7 @@
 		"js-beautify": "^1.14.0",
 		"lodash": "^4.17.21",
 		"node-fetch": "^2.6.1",
+		"sjcl": "^1.0.8",
 		"sucrase": "^3.17.1"
 	}
 }

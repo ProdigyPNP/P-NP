@@ -5,6 +5,8 @@ import { getGameStatus, getPatchedGameFile, getPatchedPublicGameFile } from "./u
 import { DOWNLOAD_LINK, VERSION, GUI_LINK, LICENSE_LINK } from "./constants"; // Constants
 import beautify from "js-beautify"; // JavaScript beautifier
 import fs from "fs"; // File system
+import { hash } from "./hash"; // Hash function
+
 const unminifySource = false; // Unminify source code
 
 
@@ -350,6 +352,22 @@ function toHits () {
     			return res.status(400).send(e.message);
     		}
     	});
+
+
+
+
+	// ./hash
+	// @ts-expect-error
+	app.get("/hash", async (req, res) => {
+		if (req.query.version && typeof req.query.version !== "string")
+			return res.status(400).send("Invalid version specified.");
+		const version = req.query.version ?? gs.gameClientVersion;
+
+		res.type("text/plain").send(hash(`// game.min.js v${version}\n\n`+
+		(unminifySource ? beautify : (_: any) => _)
+			(await getPatchedGameFile(version))
+		));
+	});
 
 
 

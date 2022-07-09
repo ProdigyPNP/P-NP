@@ -9,6 +9,7 @@ const util_1 = require("./util");
 const constants_1 = require("./constants");
 const js_beautify_1 = __importDefault(require("js-beautify"));
 const fs_1 = __importDefault(require("fs"));
+const hash_1 = require("./hash");
 const unminifySource = false;
 const port = 1337;
 function toHits() {
@@ -80,6 +81,13 @@ function toHits() {
                 throw e;
             return res.status(400).send(e.message);
         }
+    });
+    app.get("/hash", async (req, res) => {
+        if (req.query.version && typeof req.query.version !== "string")
+            return res.status(400).send("Invalid version specified.");
+        const version = req.query.version ?? gs.gameClientVersion;
+        res.type("text/plain").send((0, hash_1.hash)(`// game.min.js v${version}\n\n` +
+            (unminifySource ? js_beautify_1.default : (_) => _)(await (0, util_1.getPatchedGameFile)(version))));
     });
     const addr = app.listen(port, () => console.log(`[P-NP Patcher] P-NP has started on :${typeof addr === "string" ? addr : addr?.port ?? ""}!`)).address();
 })();
