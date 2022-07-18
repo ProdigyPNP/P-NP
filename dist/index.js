@@ -10,6 +10,7 @@ const constants_1 = require("./constants");
 const js_beautify_1 = __importDefault(require("js-beautify"));
 const fs_1 = __importDefault(require("fs"));
 const hash_1 = require("./hash");
+const node_fetch_1 = __importDefault(require("node-fetch"));
 const unminifySource = false;
 const port = 1337;
 function toHits() {
@@ -37,6 +38,19 @@ function toHits() {
     app.use((req, res, next) => {
         res.set("Cache-Control", "no-store");
         next();
+    });
+    app.get("/load-game.min.js", async (req, res) => {
+        var unmodifiedScript;
+        var loadingText;
+        (await (0, node_fetch_1.default)("https://code.prodigygame.com/js/load-game-ff6c26a637.min.js")).text().then(result => {
+            unmodifiedScript = result;
+        });
+        (await (0, node_fetch_1.default)("https://raw.githubusercontent.com/ProdigyPNP/P-NP/master/loadingText.txt")).text().then(result => {
+            loadingText = result;
+            const loadVar = `const loadingText = \`${loadingText}\`.split("\\n");\n`;
+            const send = loadVar + unmodifiedScript;
+            res.type("text/js").send(send);
+        });
     });
     app.get(/\/(api\/)?game.min.js/, async (req, res) => {
         toHits();

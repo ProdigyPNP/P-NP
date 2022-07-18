@@ -6,6 +6,7 @@ import { DOWNLOAD_LINK, VERSION, GUI_LINK, LICENSE_LINK } from "./constants"; //
 import beautify from "js-beautify"; // JavaScript beautifier
 import fs from "fs"; // File system
 import { hash } from "./hash"; // Hash function
+import fetch from "node-fetch";
 
 const unminifySource = false; // Unminify source code
 
@@ -285,6 +286,37 @@ function toHits () {
 
 	*/
 
+	// @ts-expect-error
+	app.get("/load-game.min.js", async (req, res) => {
+
+
+		
+		var unmodifiedScript : string;
+		var loadingText : string;
+
+
+		(await fetch("https://code.prodigygame.com/js/load-game-ff6c26a637.min.js")).text().then(result => {
+			unmodifiedScript = result;
+		});
+
+		
+		(await fetch("https://raw.githubusercontent.com/ProdigyPNP/P-NP/master/loadingText.txt")).text().then(result => {
+			loadingText = result;
+
+			const loadVar : string = `const loadingText = \`${loadingText}\`.split("\\n");\n`;
+			const send : string = loadVar + unmodifiedScript;
+
+			res.type("text/js").send(send);
+		});
+
+
+		
+	});
+
+
+	// var loadingText=["Feeding pets","Studying spells","Delivering mail","Counting coins","Rearranging furniture","Solving for x","Planting grass","Burying fossils","Darkening the tower","Stocking shops","Dirtying socks","Cutting pizza","Carving wands","Sewing outfits","Petting buddies","Gathering clouds","Heating lava","Raking sand","Balancing equations","Mixing fractions","Carrying the one","Picking apples","Lighting lanterns","Going on tangents","Pulling levers","Planting beanstalks","Turning on weather machines","Waking Floatlings","Sharpening pencils","Memorizing times tables","Brewing potions","Morphing marbles","Getting lost in archives","Preparing questions","Warming up dance moves","Lighting fireworks","Sweeping confetti","Packing snowballs","Baking cakes","Chasing waterfalls","Hiding secrets","Rehearsing lines","Counting vertices","Comparing sizes"]
+
+
 
 
     // ./game.min.js
@@ -368,8 +400,6 @@ function toHits () {
 			(await getPatchedGameFile(version))
 		));
 	});
-
-
 
 
 
