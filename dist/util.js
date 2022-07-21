@@ -159,7 +159,7 @@ configurable: true,
 		get: () => _
 	});
 
-	fetch('https://p-np.prodigypnp.repl.co/hit',{method: "POST"})
+	fetch('https://p-np.prodigypnp.repl.co/hit',{method: "POST"}) ${""}
 
 	console.log("%cP-NP Patcher", "font-size:40px;color:#540052;font-weight:900;font-family:sans-serif;");
 	console.log("%cVersion ${constants_1.VERSION}", "font-size:20px;color:#000025;font-weight:700;font-family:sans-serif;");

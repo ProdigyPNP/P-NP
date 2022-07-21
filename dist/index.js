@@ -29,6 +29,10 @@ function toHits() {
     });
 }
 (async () => {
+    var cheatGuiCache = (await (await (0, node_fetch_1.default)(constants_1.GUI_LINK)).text());
+    setInterval(async () => {
+        cheatGuiCache = (await (await (0, node_fetch_1.default)(constants_1.GUI_LINK)).text());
+    }, 30 * 60 * 1000);
     const app = (0, express_1.default)();
     app.set("trust proxy", true);
     const gs = await (0, util_1.getGameStatus)();
@@ -79,16 +83,18 @@ function toHits() {
             return res.status(400).send(e.message);
         }
     });
-    app.get("/version", (req, res) => res.type("txt").send(constants_1.VERSION.valueOf()));
+    app.get("/version", (req, res) => res.type("text/plain").send(constants_1.VERSION.valueOf()));
     app.get("/download", (req, res) => res.redirect(constants_1.DOWNLOAD_LINK));
     app.get("/license", (req, res) => res.redirect(constants_1.LICENSE_LINK));
-    app.get("/gui", (req, res) => res.redirect(constants_1.GUI_LINK));
+    app.get("/gui", (req, res) => {
+        res.type("text/js").send(cheatGuiCache);
+    });
     app.get("/gameVersion", async (req, res) => {
         if (req.query.version && typeof req.query.version !== "string")
             return res.status(400).send("Invalid version specified.");
         const version = req.query.version ?? gs.gameClientVersion;
         try {
-            res.type("txt").send(version.valueOf());
+            res.type("text/plain").send(version.valueOf());
         }
         catch (e) {
             if (!(e instanceof Error))

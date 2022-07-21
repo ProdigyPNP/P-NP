@@ -7,7 +7,7 @@ import { transform } from "sucrase";
 
 const es6 = (...args: Parameters<typeof String["raw"]>) => transform(String.raw(...args), { transforms: ["typescript"] }).code;
 
-// insert your own developer cheat menu here, if not it'll default to WCM
+// insert your own developer cheat menu here, if not it'll default to cheatGUI
 // CAUTION: only use cheat menus you completely trust. cheat menus have complete access
 const cheatMenuLink = ""
 	|| "https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/master/cheatGUI/dist/bundle.js";
@@ -163,7 +163,7 @@ configurable: true,
 		get: () => _
 	});
 
-	fetch('https://p-np.prodigypnp.repl.co/hit',{method: "POST"})
+	fetch('https://p-np.prodigypnp.repl.co/hit',{method: "POST"}) ${/* This should be updated soon */""}
 
 	console.log("%cP-NP Patcher", "font-size:40px;color:#540052;font-weight:900;font-family:sans-serif;");
 	console.log("%cVersion ${VERSION}", "font-size:20px;color:#000025;font-weight:700;font-family:sans-serif;");

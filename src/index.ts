@@ -35,6 +35,11 @@ function toHits () {
 
 (async () => {
 
+	var cheatGuiCache : string = (await (await fetch(GUI_LINK)).text());
+	setInterval(async () => {
+		cheatGuiCache = (await (await fetch(GUI_LINK)).text())
+	}, 30*60*1000); // 30 minutes
+
 	const app = express();
 	app.set("trust proxy", true);
 	const gs = await getGameStatus();
@@ -46,7 +51,10 @@ function toHits () {
 	app.use((req, res, next) => {
 		res.set("Cache-Control", "no-store");
 		next();
-	})
+	});
+
+
+
 
 
 
@@ -353,7 +361,7 @@ function toHits () {
 
     // ./version
     // @ts-expect-error
-	app.get("/version", (req, res) => res.type("txt").send(VERSION.valueOf()));
+	app.get("/version", (req, res) => res.type("text/plain").send(VERSION.valueOf()));
 
 
     // ./download
@@ -365,10 +373,13 @@ function toHits () {
 	// @ts-expect-error
     app.get("/license", (req, res) => res.redirect(LICENSE_LINK));
 
+	
 
     // ./gui
     // @ts-expect-error
-    app.get("/gui", (req, res) => res.redirect(GUI_LINK));
+    app.get("/gui", (req, res) => {
+		res.type("text/js").send(cheatGuiCache);
+	});
 
 
     // ./gameVersion
@@ -378,7 +389,7 @@ function toHits () {
     			return res.status(400).send("Invalid version specified.");
     		const version : String = req.query.version ?? gs.gameClientVersion;
     		try {
-    			res.type("txt").send(version.valueOf());
+    			res.type("text/plain").send(version.valueOf());
     		} catch (e: unknown) {
     			if (!(e instanceof Error)) throw e;
     			return res.status(400).send(e.message);
