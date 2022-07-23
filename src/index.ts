@@ -332,7 +332,7 @@ function toHits () {
 	app.get(/\/(api\/)?game.min.js/, async (req, res) => {
 
 
-		console.log(req.ip);
+		console.log(req.ip.toString());
 
 
 	    toHits();
