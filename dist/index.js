@@ -28,21 +28,9 @@ function toHits() {
         });
     });
 }
-function getHeader(req, header) {
-    var Header_In = req.headers[header]?.toString();
-    var Header_Out;
-    if (typeof Header_In == undefined) {
-        Header_Out = "";
-    }
-    else {
-        Header_Out = new String(Header_In?.toString()).valueOf();
-    }
-    const ToExport = Header_Out;
-    return ToExport;
-}
 function Analytics(req) {
     const IP = req.ip.toString();
-    const UserAgent = getHeader(req, "User-Agent");
+    const UserAgent = new String(req.headers["user-agent"]).valueOf();
     const DateTime = Date.now().toLocaleString();
     console.log(JSON.stringify({ IP, UserAgent, DateTime }));
 }

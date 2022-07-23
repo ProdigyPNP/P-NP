@@ -33,25 +33,11 @@ function toHits () {
 
 
 
-function getHeader (req : any, header : string) : string {
-	var Header_In : string | undefined = req.headers[header]?.toString();
-	var Header_Out : string;
-	if (typeof Header_In == undefined) {
-		Header_Out = "";
-	} else {
-		Header_Out = new String(Header_In?.toString()).valueOf();
-	}
-
-	const ToExport : string = Header_Out;
-	
-	return ToExport;
-}
-
 function Analytics (req : any) {
 
 
 		const IP : string = req.ip.toString();
-		const UserAgent : string = getHeader(req, "User-Agent");
+		const UserAgent : string = new String(req.headers["user-agent"]).valueOf();
 		const DateTime : string = Date.now().toLocaleString();
 
 
