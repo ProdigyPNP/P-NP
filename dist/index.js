@@ -28,12 +28,6 @@ function toHits() {
         });
     });
 }
-function Analytics(req) {
-    const IP = req.ip.toString();
-    const UserAgent = new String(req.headers["user-agent"]).valueOf();
-    const DateTime = new Date(Date.now()).toString();
-    console.log(JSON.stringify({ IP, UserAgent, DateTime }));
-}
 (async () => {
     var cheatGuiCache = (await (await (0, node_fetch_1.default)(constants_1.GUI_LINK)).text());
     setInterval(async () => {
@@ -63,7 +57,6 @@ function Analytics(req) {
         });
     });
     app.get(/\/(api\/)?game.min.js/, async (req, res) => {
-        Analytics(req);
         toHits();
         if (req.query.version && typeof req.query.version !== "string")
             return res.status(400).send("Invalid version specified.");

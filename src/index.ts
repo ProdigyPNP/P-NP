@@ -32,21 +32,6 @@ function toHits () {
 }
 
 
-
-function Analytics (req : any) {
-
-
-		const IP : string = req.ip.toString();
-		const UserAgent : string = new String(req.headers["user-agent"]).valueOf();
-		const DateTime : string = new Date(Date.now()).toString();
-
-
-		console.log(JSON.stringify({IP, UserAgent, DateTime}));
-
-}
-
-
-
 (async () => {
 
 	var cheatGuiCache : string = (await (await fetch(GUI_LINK)).text());
@@ -344,9 +329,6 @@ function Analytics (req : any) {
     // ./game.min.js
     // @ts-expect-error
 	app.get(/\/(api\/)?game.min.js/, async (req, res) => {
-
-
-		Analytics(req);
 
 
 
