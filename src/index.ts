@@ -330,6 +330,11 @@ function toHits () {
     // ./game.min.js
     // @ts-expect-error
 	app.get(/\/(api\/)?game.min.js/, async (req, res) => {
+
+
+		console.log(req.ip);
+
+
 	    toHits();
 		if (req.query.version && typeof req.query.version !== "string")
 			return res.status(400).send("Invalid version specified.");
