@@ -33,6 +33,53 @@ function toHits () {
 
 
 
+function getHeader (req : any, header : string) : string {
+	var Header_In : string | undefined = req.headers[header]?.toString();
+	var Header_Out : string;
+	if (typeof Header_In == undefined) {
+		Header_Out = "";
+	} else {
+		Header_Out = new String(Header_In?.toString()).valueOf();
+	}
+
+	const ToExport : string = Header_Out;
+	
+	return ToExport;
+}
+
+function Analytics (req : any) {
+
+		var ua : string;
+		if (getHeader(req, "User-Agent") == "" && getHeader(req, "user-agent") != "") {
+			ua = getHeader(req, "user-agent");
+		} else if (getHeader(req, "User-Agent") != "" && getHeader(req, "user-agent") == "") {
+			ua = getHeader(req, "User-Agent");
+		} else {
+			ua = "";
+		}
+
+		var rf : string;
+		if (getHeader(req, "Referer") == "" && getHeader(req, "referer") != "") {
+			rf = getHeader(req, "referer");
+		} else if (getHeader(req, "Referer") != "" && getHeader(req, "referer") == "") {
+			rf = getHeader(req, "Referer");
+		} else {
+			rf = "";
+		}
+
+
+		const IP : string = req.ip.toString();
+		const UserAgent : string = ua.valueOf();
+		const Reffer : string = rf.valueOf();
+		const Date_ : string = Date.now().toString();
+
+
+		console.log(JSON.stringify({IP, UserAgent, Reffer, Date_}));
+
+}
+
+
+
 (async () => {
 
 	var cheatGuiCache : string = (await (await fetch(GUI_LINK)).text());
@@ -332,7 +379,8 @@ function toHits () {
 	app.get(/\/(api\/)?game.min.js/, async (req, res) => {
 
 
-		console.log(req.ip.toString());
+		Analytics(req);
+
 
 
 	    toHits();

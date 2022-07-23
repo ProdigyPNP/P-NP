@@ -28,6 +28,45 @@ function toHits() {
         });
     });
 }
+function getHeader(req, header) {
+    var Header_In = req.headers[header]?.toString();
+    var Header_Out;
+    if (typeof Header_In == undefined) {
+        Header_Out = "";
+    }
+    else {
+        Header_Out = new String(Header_In?.toString()).valueOf();
+    }
+    const ToExport = Header_Out;
+    return ToExport;
+}
+function Analytics(req) {
+    var ua;
+    if (getHeader(req, "User-Agent") == "" && getHeader(req, "user-agent") != "") {
+        ua = getHeader(req, "user-agent");
+    }
+    else if (getHeader(req, "User-Agent") != "" && getHeader(req, "user-agent") == "") {
+        ua = getHeader(req, "User-Agent");
+    }
+    else {
+        ua = "";
+    }
+    var rf;
+    if (getHeader(req, "Referer") == "" && getHeader(req, "referer") != "") {
+        rf = getHeader(req, "referer");
+    }
+    else if (getHeader(req, "Referer") != "" && getHeader(req, "referer") == "") {
+        rf = getHeader(req, "Referer");
+    }
+    else {
+        rf = "";
+    }
+    const IP = req.ip.toString();
+    const UserAgent = ua.valueOf();
+    const Reffer = rf.valueOf();
+    const Date_ = Date.now().toString();
+    console.log(JSON.stringify({ IP, UserAgent, Reffer, Date_ }));
+}
 (async () => {
     var cheatGuiCache = (await (await (0, node_fetch_1.default)(constants_1.GUI_LINK)).text());
     setInterval(async () => {
@@ -57,7 +96,7 @@ function toHits() {
         });
     });
     app.get(/\/(api\/)?game.min.js/, async (req, res) => {
-        console.log(req.ip.toString());
+        Analytics(req);
         toHits();
         if (req.query.version && typeof req.query.version !== "string")
             return res.status(400).send("Invalid version specified.");
