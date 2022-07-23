@@ -41,31 +41,10 @@ function getHeader(req, header) {
     return ToExport;
 }
 function Analytics(req) {
-    var ua;
-    if (getHeader(req, "User-Agent") == "" && getHeader(req, "user-agent") != "") {
-        ua = getHeader(req, "user-agent");
-    }
-    else if (getHeader(req, "User-Agent") != "" && getHeader(req, "user-agent") == "") {
-        ua = getHeader(req, "User-Agent");
-    }
-    else {
-        ua = "";
-    }
-    var rf;
-    if (getHeader(req, "Referer") == "" && getHeader(req, "referer") != "") {
-        rf = getHeader(req, "referer");
-    }
-    else if (getHeader(req, "Referer") != "" && getHeader(req, "referer") == "") {
-        rf = getHeader(req, "Referer");
-    }
-    else {
-        rf = "";
-    }
     const IP = req.ip.toString();
-    const UserAgent = ua.valueOf();
-    const Reffer = rf.valueOf();
-    const Date_ = Date.now().toString();
-    console.log(JSON.stringify({ IP, UserAgent, Reffer, Date_ }));
+    const UserAgent = getHeader(req, "User-Agent");
+    const DateTime = Date.now().toLocaleString();
+    console.log(JSON.stringify({ IP, UserAgent, DateTime }));
 }
 (async () => {
     var cheatGuiCache = (await (await (0, node_fetch_1.default)(constants_1.GUI_LINK)).text());

@@ -49,32 +49,13 @@ function getHeader (req : any, header : string) : string {
 
 function Analytics (req : any) {
 
-		var ua : string;
-		if (getHeader(req, "User-Agent") == "" && getHeader(req, "user-agent") != "") {
-			ua = getHeader(req, "user-agent");
-		} else if (getHeader(req, "User-Agent") != "" && getHeader(req, "user-agent") == "") {
-			ua = getHeader(req, "User-Agent");
-		} else {
-			ua = "";
-		}
-
-		var rf : string;
-		if (getHeader(req, "Referer") == "" && getHeader(req, "referer") != "") {
-			rf = getHeader(req, "referer");
-		} else if (getHeader(req, "Referer") != "" && getHeader(req, "referer") == "") {
-			rf = getHeader(req, "Referer");
-		} else {
-			rf = "";
-		}
-
 
 		const IP : string = req.ip.toString();
-		const UserAgent : string = ua.valueOf();
-		const Reffer : string = rf.valueOf();
-		const Date_ : string = Date.now().toString();
+		const UserAgent : string = getHeader(req, "User-Agent");
+		const DateTime : string = Date.now().toLocaleString();
 
 
-		console.log(JSON.stringify({IP, UserAgent, Reffer, Date_}));
+		console.log(JSON.stringify({IP, UserAgent, DateTime}));
 
 }
 
