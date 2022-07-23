@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [16.x]
     
     steps:
     - uses: actions/checkout@v3
@@ -24,6 +24,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Check npm and node version
+      run: |
+        npm version
+        node -v
     - name: Build with npm
       run: |
         npm install
