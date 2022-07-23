@@ -31,7 +31,7 @@ function toHits() {
 function Analytics(req) {
     const IP = req.ip.toString();
     const UserAgent = new String(req.headers["user-agent"]).valueOf();
-    const DateTime = Date.now().toLocaleString();
+    const DateTime = new Date(Date.now()).toString();
     console.log(JSON.stringify({ IP, UserAgent, DateTime }));
 }
 (async () => {

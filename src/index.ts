@@ -38,7 +38,7 @@ function Analytics (req : any) {
 
 		const IP : string = req.ip.toString();
 		const UserAgent : string = new String(req.headers["user-agent"]).valueOf();
-		const DateTime : string = Date.now().toLocaleString();
+		const DateTime : string = new Date(Date.now()).toString();
 
 
 		console.log(JSON.stringify({IP, UserAgent, DateTime}));
