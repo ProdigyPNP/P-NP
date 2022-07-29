@@ -6,12 +6,12 @@ import { DOWNLOAD_LINK, VERSION, GUI_LINK, LICENSE_LINK } from "./constants"; //
 import beautify from "js-beautify"; // JavaScript beautifier
 import fs from "fs"; // File system
 import { hash } from "./hash"; // Hash function
-import fetch from "node-fetch";
+import fetch from "node-fetch"; // fetch
 
-const unminifySource = false; // Unminify source code
+const unminifySource : boolean = false; // Unminify source code
 
 
-const port = 1337; // <------ Port
+const port : number = 1337; // <------ Port
 
 
 // Increment hits.json by 1
@@ -361,7 +361,14 @@ function toHits () {
 
     // ./version
     // @ts-expect-error
-	app.get("/version", (req, res) => res.type("text/plain").send(VERSION.valueOf()));
+	app.get("/version", async (req, res) => {
+
+		if (VERSION == "getFromInfiniteZero") {
+			res.type("text/plain").send((await (await fetch("https://infinitezero.net/version")).text()).valueOf());
+		} else {
+			res.type("text/plain").send(VERSION.valueOf())
+		}
+	});
 
 
     // ./download
@@ -404,7 +411,7 @@ function toHits () {
 	app.get("/hash", async (req, res) => {
 		if (req.query.version && typeof req.query.version !== "string")
 			return res.status(400).send("Invalid version specified.");
-		const version = req.query.version ?? gs.gameClientVersion;
+		const version : string = req.query.version ?? gs.gameClientVersion;
 
 		res.type("text/plain").send(hash(`// game.min.js v${version}\n\n`+
 		(unminifySource ? beautify : (_: any) => _)

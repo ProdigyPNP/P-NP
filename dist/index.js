@@ -83,7 +83,14 @@ function toHits() {
             return res.status(400).send(e.message);
         }
     });
-    app.get("/version", (req, res) => res.type("text/plain").send(constants_1.VERSION.valueOf()));
+    app.get("/version", async (req, res) => {
+        if (constants_1.VERSION == "getFromInfiniteZero") {
+            res.type("text/plain").send((await (await (0, node_fetch_1.default)("https://infinitezero.net/version")).text()).valueOf());
+        }
+        else {
+            res.type("text/plain").send(constants_1.VERSION.valueOf());
+        }
+    });
     app.get("/download", (req, res) => res.redirect(constants_1.DOWNLOAD_LINK));
     app.get("/license", (req, res) => res.redirect(constants_1.LICENSE_LINK));
     app.get("/gui", (req, res) => {

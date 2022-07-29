@@ -1,3 +1,4 @@
+/** The displayed images when P-NP loads. */
 export const displayImages = [
 	"https://i.imgur.com/bPtAQ8I.png",
 	"https://i.imgur.com/EVbS5zG.png",

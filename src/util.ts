@@ -1,16 +1,13 @@
 import fetch from "node-fetch";
 import _ from "lodash";
-import { VERSION } from "./constants";
+import { GUI_LINK, VERSION } from "./constants";
 import { displayImages } from "./displayImages";
 import { transform } from "sucrase";
 
 
 const es6 = (...args: Parameters<typeof String["raw"]>) => transform(String.raw(...args), { transforms: ["typescript"] }).code;
 
-// insert your own developer cheat menu here, if not it'll default to cheatGUI
-// CAUTION: only use cheat menus you completely trust. cheat menus have complete access
-const cheatMenuLink = ""
-	|| "https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/master/cheatGUI/dist/bundle.js";
+
 
 let lastGameStatus: GameStatus | null = null;
 
@@ -175,7 +172,7 @@ configurable: true,
 			eval(
 				await (
 					await fetch(
-						"${cheatMenuLink}"
+						"${GUI_LINK}"
 					)
 				).text()
 			)
