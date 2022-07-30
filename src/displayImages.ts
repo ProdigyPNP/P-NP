@@ -1,5 +1,5 @@
 /** The displayed images when P-NP loads. */
-export const displayImages = [
+export const displayImages : Array<string> = [
 	"https://i.imgur.com/bPtAQ8I.png",
 	"https://i.imgur.com/EVbS5zG.png",
 	"https://i.imgur.com/ij1DgZi.png",
