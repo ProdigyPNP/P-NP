@@ -123,6 +123,7 @@ function toHits() {
 				</head>	
 				<body>
 					<h1>Prodigy Gamefile Patcher</h1>
+					<p>This is a tool for patching the game.min.js file of the Prodigy Game client.</p>
 				</body>	
 			</html>`);
     });
