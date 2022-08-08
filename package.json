@@ -1,6 +1,6 @@
 {
 	"name": "p-np-patcher",
-	"version": "2.2.1",
+	"version": "3.0.0",
 	"description": "Modifies and serves Prodigy's game files",
 	"main": "index.js",
 	"scripts": {
