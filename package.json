@@ -5,11 +5,18 @@
 	"main": "index.js",
 	"scripts": {
 		"setup": "npm install",
-		"quickstart": "npm install && node dist",
+
+		"quickstart": "npm install && npx tsc && node dist",
+
+		"prestart": "npm run build",
 		"start": "node dist",
+		"poststart": "rm -rf dist",
+
 		"server": "node dist",
+
 		"build": "npx tsc",
 		"tsc": "npx tsc",
+
 		"compile": "npx pkg .",
 		"create-exes": "npx pkg ."
 	},

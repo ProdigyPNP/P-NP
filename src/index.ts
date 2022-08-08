@@ -52,8 +52,7 @@ function toHits () {
 
 
 
-	// @ts-expect-error
-	app.get("/load-game.min.js", async (req, res) => {
+	app.get("/load-game.min.js", async (_req, res) => {
 
 
 		
@@ -118,27 +117,23 @@ function toHits () {
 	});
 
     // ./version
-    // @ts-expect-error
-	app.get("/version", async (req, res) => {
+	app.get("/version", async (_req, res) => {
 		const output : string = VERSION || (await (await fetch("https://infinitezero.net/version")).text()).valueOf();
 		res.type("text/plain").send(output);
 	});
 
 
     // ./download
-    // @ts-expect-error
-	app.get("/download", (req, res) => res.redirect(DOWNLOAD_LINK));
+	app.get("/download", (_req, res) => res.redirect(DOWNLOAD_LINK));
 
 
 	// ./license
-	// @ts-expect-error
-    app.get("/license", (req, res) => res.redirect(LICENSE_LINK));
+    app.get("/license", (_req, res) => res.redirect(LICENSE_LINK));
 
 	
 
     // ./gui
-    // @ts-expect-error
-    app.get("/gui", (req, res) => {
+    app.get("/gui", (_req, res) => {
 		res.type("text/js").send(latestCheatGui);
 	});
 
@@ -171,6 +166,24 @@ function toHits () {
 		(UNMINIFY_SOUCE ? beautify : (_: any) => _)
 			(await getPatchedGameFile(version))
 		));
+	});
+
+	app.get("/", (_req, res) => {
+		res
+			.status(200)
+			.type("text/html")
+			.send(`<!DOCTYPE html>
+			<html>
+				<head>
+					<title>Prodigy Game Patcher</title>
+					<meta charset="utf-8" />
+					<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/master/.github/PTB.png"/>
+				</head>	
+				<body>
+					<h1>Prodigy Gamefile Patcher</h1>
+					<p>This is a tool for patching the game.min.js file of the Prodigy Game client.</p>
+				</body>	
+			</html>`);
 	});
 
 	const addr: ReturnType<Server["address"]> = app.listen(SERVER_PORT, () =>

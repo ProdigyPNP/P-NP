@@ -41,7 +41,7 @@ function toHits() {
         res.set("Cache-Control", "no-cache");
         next();
     });
-    app.get("/load-game.min.js", async (req, res) => {
+    app.get("/load-game.min.js", async (_req, res) => {
         var unmodifiedScript;
         var loadingText;
         (await (0, node_fetch_1.default)("https://code.prodigygame.com/js/load-game-ff6c26a637.min.js")).text().then(result => {
@@ -81,13 +81,13 @@ function toHits() {
             return res.status(400).send(e.message);
         }
     });
-    app.get("/version", async (req, res) => {
+    app.get("/version", async (_req, res) => {
         const output = constants_1.VERSION || (await (await (0, node_fetch_1.default)("https://infinitezero.net/version")).text()).valueOf();
         res.type("text/plain").send(output);
     });
-    app.get("/download", (req, res) => res.redirect(constants_1.DOWNLOAD_LINK));
-    app.get("/license", (req, res) => res.redirect(constants_1.LICENSE_LINK));
-    app.get("/gui", (req, res) => {
+    app.get("/download", (_req, res) => res.redirect(constants_1.DOWNLOAD_LINK));
+    app.get("/license", (_req, res) => res.redirect(constants_1.LICENSE_LINK));
+    app.get("/gui", (_req, res) => {
         res.type("text/js").send(cheatGuiCache_1.latestCheatGui);
     });
     app.get("/gameVersion", async (req, res) => {
@@ -109,6 +109,22 @@ function toHits() {
         const version = req.query.version ?? gs.gameClientVersion;
         res.type("text/plain").send((0, hash_1.hash)(`// game.min.js v${version}\n\n` +
             (constants_1.UNMINIFY_SOUCE ? js_beautify_1.default : (_) => _)(await (0, util_1.getPatchedGameFile)(version))));
+    });
+    app.get("/", (_req, res) => {
+        res
+            .status(200)
+            .type("text/html")
+            .send(`<!DOCTYPE html>
+			<html>
+				<head>
+					<title>Prodigy Game Patcher</title>
+					<meta charset="utf-8" />
+					<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ProdigyPNP/ProdigyMathGameHacking/master/.github/PTB.png"/>
+				</head>	
+				<body>
+					<h1>Prodigy Gamefile Patcher</h1>
+				</body>	
+			</html>`);
     });
     const addr = app.listen(constants_1.SERVER_PORT, () => console.log(`[P-NP Patcher] P-NP has started on :${typeof addr === "string" ? addr : addr?.port ?? ""}!`)).address();
 })();
