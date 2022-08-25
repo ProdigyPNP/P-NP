@@ -70,8 +70,7 @@ node dist
 git clone https://github.com/ProdigyPNP/P-NP.git
 cd P-NP
 npm install
-# npm run build
-# We'll return build soon, it's a bit of a mess right now as we only have the dist.
+npm run build
 npm run create-exes
 ```
 <br>
@@ -89,8 +88,7 @@ npm run create-exes
 git clone https://github.com/ProdigyPNP/P-NP.git
 cd P-NP
 npm install
-# npm run build
-# We'll return build soon, it's a bit of a mess right now as we only have the dist.
+npm run build
 npm run create-exes
 ```
 <br>
@@ -108,8 +106,7 @@ npm run create-exes
 git clone https://github.com/ProdigyPNP/P-NP
 cd P-NP
 npm install
-# npm run build
-# We'll return build soon, it's a bit of a mess right now as we only have the dist.
+npm run build
 npm run create-exes
 ```
 <br><br>
