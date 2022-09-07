@@ -118,7 +118,7 @@ function toHits () {
 
     // ./version
 	app.get("/version", async (_req, res) => {
-		const output : string = VERSION || (await (await fetch("https://infinitezero.net/version")).text()).valueOf();
+		const output : string = VERSION;
 		res.type("text/plain").send(output);
 	});
 

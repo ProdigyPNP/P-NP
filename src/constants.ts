@@ -1,6 +1,6 @@
 /** Insert your own PHEx version here, if not P-NP will default to fetching the latest one from Infinite Zero.
  * CAUTION: PHEx will prompt to update if the version does not math this one's version. */
-export const VERSION : string = "";
+export const VERSION : string = "3.0.1";
 
 /** Insert your own developer cheat menu here, if not it'll default to cheatGUI.
  * CAUTION: Only use cheat menus you completely trust. Cheat menus have complete JavaScript eval access. */
