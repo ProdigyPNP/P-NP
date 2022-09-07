@@ -82,7 +82,7 @@ function toHits() {
         }
     });
     app.get("/version", async (_req, res) => {
-        const output = constants_1.VERSION || (await (await (0, node_fetch_1.default)("https://infinitezero.net/version")).text()).valueOf();
+        const output = constants_1.VERSION;
         res.type("text/plain").send(output);
     });
     app.get("/download", (_req, res) => res.redirect(constants_1.DOWNLOAD_LINK));
