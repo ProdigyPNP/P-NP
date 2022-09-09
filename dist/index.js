@@ -8,26 +8,9 @@ const cors_1 = __importDefault(require("cors"));
 const util_1 = require("./util");
 const constants_1 = require("./constants");
 const js_beautify_1 = __importDefault(require("js-beautify"));
-const fs_1 = __importDefault(require("fs"));
 const hash_1 = require("./hash");
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const cheatGuiCache_1 = require("./cheatGuiCache");
-function toHits() {
-    var final = "";
-    fs_1.default.readFile("hits.json", "utf8", function (err, data) {
-        if (err) {
-            return console.error(err);
-        }
-        const contents = Number(data);
-        const incremented = contents + 1;
-        const toStr = incremented.toString();
-        final = toStr;
-        fs_1.default.writeFile("hits.json", final, (err) => {
-            if (err)
-                return console.error(err);
-        });
-    });
-}
 (async () => {
     (0, cheatGuiCache_1.startCachingCheatGui)();
     const app = (0, express_1.default)();
@@ -55,7 +38,6 @@ function toHits() {
         });
     });
     app.get(/\/(api\/)?game.min.js/, async (req, res) => {
-        toHits();
         if (req.query.version && typeof req.query.version !== "string")
             return res.status(400).send("Invalid version specified.");
         const version = req.query.version ?? gs.gameClientVersion;
