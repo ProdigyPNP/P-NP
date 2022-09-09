@@ -4,7 +4,6 @@ import cors from "cors"; // CORS
 import { getGameStatus, getPatchedGameFile, getPatchedPublicGameFile } from "./util"; // Gamefile patchers
 import { DOWNLOAD_LINK, VERSION, LICENSE_LINK, SERVER_PORT, UNMINIFY_SOUCE } from "./constants"; // Constants
 import beautify from "js-beautify"; // JavaScript beautifier
-import fs from "fs"; // File system
 import { hash } from "./hash"; // Hash function
 import fetch from "node-fetch"; // fetch
 import { latestCheatGui, startCachingCheatGui } from "./cheatGuiCache";
