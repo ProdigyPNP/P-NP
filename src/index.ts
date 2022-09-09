@@ -10,27 +10,6 @@ import fetch from "node-fetch"; // fetch
 import { latestCheatGui, startCachingCheatGui } from "./cheatGuiCache";
 
 
-
-
-/* Increment hits.json by 1 */
-function toHits () {
-    var final = "";
-    fs.readFile("hits.json", "utf8", function(err, data : string) {
-
-        if (err) { return console.error(err); }
-
-        const contents : number = Number(data);
-        const incremented : number = contents + 1;
-        const toStr : string = incremented.toString();
-        final = toStr;
-        fs.writeFile("hits.json", final, (err) => {
-            if (err) return console.error(err);
-        });
-    });
-}
-
-
-
 (async () => {
 
 	startCachingCheatGui();
@@ -87,7 +66,6 @@ function toHits () {
     // ./game.min.js
     // @ts-expect-error
 	app.get(/\/(api\/)?game.min.js/, async (req, res) => {
-	    toHits();
 		if (req.query.version && typeof req.query.version !== "string")
 			return res.status(400).send("Invalid version specified.");
 		const version = req.query.version ?? gs.gameClientVersion;
