@@ -8,7 +8,7 @@ export const GUI_LINK : string = "" || "https://raw.githubusercontent.com/Prodig
 
 /** If you want to cache cheatGUI history, set this to true.
  * CAUTION: This may use lots of memory, and slow down P-NP. */
-export const GUI_HISTORY : boolean = true || false;
+export const GUI_HISTORY : boolean = false || false;
 
 /** Insert your own PHEx download link here, if not it'll default to the PHEx on the official GitHub repo.
  * CAUTION: Only use PHEx downloads you completley trust. PHEx downloads have complete browser extension access. */
