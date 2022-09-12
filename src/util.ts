@@ -50,9 +50,10 @@ export const logtraffic = () => {
 
 // @ts-expect-error
 export const patchGameFile = (str: string, version: string): string => {
-	const variables = [str.match(/window,function\((.)/)![1], str.match(/var (.)={}/)![1]] as string[];
+	const app = str.match(/window,function\((.)/)![1]
+	const game = str.match(/var (.)={}/)![1];
 	const patches: [string | RegExp, string][] = Object.entries({
-		[`s),this._game=${variables![1]}`]: `s),this._game=${variables![1]};
+		[`s),this._game=${game}`]: `s),this._game=${game};
 			jQuery.temp = window._;
 			let lodashChecker = setInterval(() => {
 				if (jQuery.temp !== window._) {
@@ -62,13 +63,13 @@ export const patchGameFile = (str: string, version: string): string => {
 				}
 			});
 			Object.defineProperty(window._, "instance", { 
-				get: () => ${variables![0]}.instance,
+				get: () => ${app}.instance,
 		enumerable: true,
 	configurable: true
 			});`,
-		[`${variables![0]}.constants=Object`]: `window._.constants=${variables![0]},${variables![0]}.constants=Object`,
-		[`window,function(${variables![0]}){var ${variables![1]}={};`]: `window,function(${variables![0]}){var ${variables![1]}={};window._.modules=${variables![1]};`,
-		[`${variables![0]}.prototype.hasMembership=`]: `${variables![1]}.prototype.hasMembership=_=>true,${variables![1]}.prototype.originalHasMembership=`,
+		[`${app}.constants=Object`]: `window._.constants=${app},${app}.constants=Object`,
+		[`window,function(${app}){var ${game}={};`]: `window,function(${app}){var ${game}={};window._.modules=${game};`,
+		[`${app}.prototype.hasMembership=`]: `${game}.prototype.hasMembership=_=>true,${game}.prototype.originalHasMembership=`,
 		"answerQuestion=function(){": `answerQuestion=function(){
 			if (!_.constants.get('GameConstants.Debug.EDUCATION_ENABLED')) {
 				const wasCorrect = Math.random() < _.constants.get('GameConstants.Debug.AUTO_ANSWER_CORRECT_PERCENT');
