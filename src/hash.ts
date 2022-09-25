@@ -1,5 +1,5 @@
 /** Stanford Javascript Crypto Library */
-const sjcl = require("sjcl");
+import sjcl from "sjcl";
 
 
 /** Generate base64-encoded SHA256 for given string. */
