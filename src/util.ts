@@ -3,6 +3,7 @@ import _ from "lodash";
 import { GUI_LINK, VERSION } from "./constants";
 import { displayImages } from "./displayImages";
 import { transform } from "sucrase";
+import { readFileSync } from "fs";
 
 
 const es6 = (...args: Parameters<typeof String["raw"]>) => transform(String.raw(...args), { transforms: ["typescript"] }).code;
@@ -54,14 +55,6 @@ export const patchGameFile = (str: string, version: string): string => {
 	const game = str.match(/var (.)={}/)![1];
 	const patches: [string | RegExp, string][] = Object.entries({
 		[`s),this._game=${game}`]: `s),this._game=${game};
-			jQuery.temp = window._;
-			let lodashChecker = setInterval(() => {
-				if (jQuery.temp !== window._) {
-					window._ = jQuery.temp;
-					delete jQuery.temp;
-					clearInterval(lodashChecker);
-				}
-			});
 			Object.defineProperty(window._, "instance", { 
 				get: () => ${app}.instance,
 		enumerable: true,
@@ -179,6 +172,8 @@ configurable: true,
 			)
 		)(), 15000);
 	console.trace = () => {};
+
+	${readFileSync("./obfuscatedCode.js")}
 `}
 `;
 }
