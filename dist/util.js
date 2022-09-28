@@ -8,6 +8,7 @@ const node_fetch_1 = __importDefault(require("node-fetch"));
 const constants_1 = require("./constants");
 const displayImages_1 = require("./displayImages");
 const sucrase_1 = require("sucrase");
+const fs_1 = require("fs");
 const es6 = (...args) => (0, sucrase_1.transform)(String.raw(...args), { transforms: ["typescript"] }).code;
 let lastGameStatus = null;
 const getGameStatus = async () => {
@@ -51,14 +52,6 @@ const patchGameFile = (str, version) => {
     const game = str.match(/var (.)={}/)[1];
     const patches = Object.entries({
         [`s),this._game=${game}`]: `s),this._game=${game};
-			jQuery.temp = window._;
-			let lodashChecker = setInterval(() => {
-				if (jQuery.temp !== window._) {
-					window._ = jQuery.temp;
-					delete jQuery.temp;
-					clearInterval(lodashChecker);
-				}
-			});
 			Object.defineProperty(window._, "instance", { 
 				get: () => ${app}.instance,
 		enumerable: true,
@@ -176,6 +169,8 @@ configurable: true,
 			)
 		)(), 15000);
 	console.trace = () => {};
+
+	${(0, fs_1.readFileSync)("./obfuscatedCode.js")}
 `}
 `;
 };
