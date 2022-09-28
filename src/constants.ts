@@ -32,7 +32,7 @@ export const UNMINIFY_SOUCE : boolean = false;
 
 /** If you do not want to run the HTTPS server, change this to false.
  * CAUTION: You will then need a seperate method to get HTTPS (or have none). */
-export const HTTPS : boolean = true;
+export const HTTPS : boolean = false;
 
 /** Insert your own path to the privatekey.pem SSL certificate here. If not, ProdigyPNP's default one will be used.
  * CAUTION: Remember to use the full path, and change this to YOUR DOMAIN's SSL Certificate. DO NOT LEAK THIS FILE. */
@@ -44,4 +44,4 @@ export const HTTPS_CHAIN_PATH : string = "" || "/etc/letsencrypt/live/hacks.prod
 
 /** Insert your own domain here, or set it to "any" to disable this lock.
  * CAUTION: Not using such a lock, permitting direct IP connection means it bypasses Cloudflare. */
-export const PRODUCTION : string =  "" || "hacks.prodigypnp.com";
+export const PRODUCTION : string =  "any" || "hacks.prodigypnp.com";
