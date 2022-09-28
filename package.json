@@ -52,6 +52,7 @@
 		"@hapi/cryptiles": "^6.0.0",
 		"cors": "^2.8.5",
 		"express": "^4.17.1",
+		"express-rate-limit": "^6.6.0",
 		"js-beautify": "^1.14.0",
 		"lodash": "^4.17.21",
 		"node-fetch": "^2.6.1",

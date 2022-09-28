@@ -1,8 +1,11 @@
-import type { Server } from "http"; // Server typings
+import RateLimit from "express-rate-limit"; // Rate Limiter
+import fs from "fs"; // File System
+import http from "http"; // HTTP Server
+import https from "https"; // HTTPS Server
 import express from "express"; // Express server
 import cors from "cors"; // CORS
 import { getGameStatus, getPatchedGameFile, getPatchedPublicGameFile } from "./util"; // Gamefile patchers
-import { DOWNLOAD_LINK, VERSION, LICENSE_LINK, SERVER_PORT, UNMINIFY_SOUCE } from "./constants"; // Constants
+import { DOWNLOAD_LINK, VERSION, LICENSE_LINK, HTTP_PORT, UNMINIFY_SOUCE, HTTPS, HTTPS_CHAIN_PATH, HTTPS_KEY_PATH, HTTPS_PORT, PRODUCTION } from "./constants"; // Constants
 import beautify from "js-beautify"; // JavaScript beautifier
 import { hash } from "./hash"; // Hash function
 import fetch from "node-fetch"; // fetch
@@ -19,12 +22,49 @@ import { latestCheatGui, startCachingCheatGui } from "./cheatGuiCache";
 
 	if (!gs) { throw new Error("The game status request failed."); }
 
+	// Cross Origin Resource Sharing
 	app.use(cors());
-	// @ts-expect-error
-	app.use((req, res, next) => {
-		res.set("Cache-Control", "no-cache");
+
+	// No Caching
+	app.use((_req, res, next) => {
+		res.set("Cache-Control", "no-store");
 		next();
 	});
+
+	// Rate Limit
+	app.use(RateLimit({
+		windowMs: 20*1000, // 20 seconds
+		max: 4, // limit each IP to 4 requests per windowMs
+    }));
+
+
+	// Enforce hostname
+	if (PRODUCTION !== "" && PRODUCTION !== "any") {
+		app.use((req, res, next) => {
+
+				if (req.hostname === "chat.prodigypnp.com") {
+				 	res.redirect("https://chat.prodigypnp.com:8443/");
+				} else if (req.hostname === "localhost") {
+					next();
+				}
+				else if (req.hostname !== PRODUCTION) {
+					res.status(403).send("Direct IP connection is prohibited. Try using hacks.prodigypnp.com");
+				}
+				else {
+					next();
+				}
+		});
+	}
+
+	
+
+
+/*-----------------------------------------------*
+ *                                               *
+ *                 RATE LIMITER                  *
+ *                                               *
+ ------------------------------------------------*/
+
 
 
 
@@ -163,8 +203,30 @@ import { latestCheatGui, startCachingCheatGui } from "./cheatGuiCache";
 			</html>`);
 	});
 
-	const addr: ReturnType<Server["address"]> = app.listen(SERVER_PORT, () =>
-		console.log(`[P-NP Patcher] P-NP has started on :${typeof addr === "string" ? addr : addr?.port ?? ""}!`)
-	).address();
+	
+
+    if (HTTPS) {
+        console.log("ИСПОЛЬЗУЕМ HTTPS.");
+
+		/** HTTPS Server */
+		let httpsServer = https.createServer({
+            key: fs.readFileSync(HTTPS_KEY_PATH),
+            cert: fs.readFileSync(HTTPS_CHAIN_PATH),
+        }, app);
+
+        // HTTPS server starts listening the `HTTPS_PORT`
+        httpsServer.listen(HTTPS_PORT, () => {
+            console.log(`СЕРВЕР HTTPS ВКЛЮЧЕН НА: http://localhost:${HTTPS_PORT}/`);
+         });
+    } else {
+        console.log("НЕ ИСПОЛЬЗУЕМ HTTPS.");
+    }
+
+      
+    /* HTTP Server */
+    http.createServer(app).listen(HTTP_PORT, () => {
+        console.log(`СЕРВЕР HTTP ВКЛЮЧЕН НА: http://localhost:${HTTP_PORT}/`);
+    });
+
 
 })();

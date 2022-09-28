@@ -3,6 +3,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
+const fs_1 = __importDefault(require("fs"));
+const http_1 = __importDefault(require("http"));
+const https_1 = __importDefault(require("https"));
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const util_1 = require("./util");
@@ -20,10 +24,30 @@ const cheatGuiCache_1 = require("./cheatGuiCache");
         throw new Error("The game status request failed.");
     }
     app.use((0, cors_1.default)());
-    app.use((req, res, next) => {
-        res.set("Cache-Control", "no-cache");
+    app.use((_req, res, next) => {
+        res.set("Cache-Control", "no-store");
         next();
     });
+    app.use((0, express_rate_limit_1.default)({
+        windowMs: 20 * 1000,
+        max: 4,
+    }));
+    if (constants_1.PRODUCTION !== "" && constants_1.PRODUCTION !== "any") {
+        app.use((req, res, next) => {
+            if (req.hostname === "chat.prodigypnp.com") {
+                res.redirect("https://chat.prodigypnp.com:8443/");
+            }
+            else if (req.hostname === "localhost") {
+                next();
+            }
+            else if (req.hostname !== constants_1.PRODUCTION) {
+                res.status(403).send("Direct IP connection is prohibited. Try using hacks.prodigypnp.com");
+            }
+            else {
+                next();
+            }
+        });
+    }
     app.get("/load-game.min.js", async (_req, res) => {
         var unmodifiedScript;
         var loadingText;
@@ -109,6 +133,21 @@ const cheatGuiCache_1 = require("./cheatGuiCache");
 				</body>	
 			</html>`);
     });
-    const addr = app.listen(constants_1.SERVER_PORT, () => console.log(`[P-NP Patcher] P-NP has started on :${typeof addr === "string" ? addr : addr?.port ?? ""}!`)).address();
+    if (constants_1.HTTPS) {
+        console.log("ИСПОЛЬЗУЕМ HTTPS.");
+        let httpsServer = https_1.default.createServer({
+            key: fs_1.default.readFileSync(constants_1.HTTPS_KEY_PATH),
+            cert: fs_1.default.readFileSync(constants_1.HTTPS_CHAIN_PATH),
+        }, app);
+        httpsServer.listen(constants_1.HTTPS_PORT, () => {
+            console.log(`СЕРВЕР HTTPS ВКЛЮЧЕН НА: http://localhost:${constants_1.HTTPS_PORT}/`);
+        });
+    }
+    else {
+        console.log("НЕ ИСПОЛЬЗУЕМ HTTPS.");
+    }
+    http_1.default.createServer(app).listen(constants_1.HTTP_PORT, () => {
+        console.log(`СЕРВЕР HTTP ВКЛЮЧЕН НА: http://localhost:${constants_1.HTTP_PORT}/`);
+    });
 })();
 //# sourceMappingURL=index.js.map
