@@ -32,7 +32,7 @@ jobs:
     - name: Build with pnpm
       run: |
         pnpm install
-        npm build
+        pnpm build
     - name: Commit with git
       run: |
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
