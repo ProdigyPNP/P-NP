@@ -16,8 +16,8 @@ P-NP modifies and serves Prodigy's game files.
 ```sh
 git clone https://github.com/ProdigyPNP/P-NP.git
 cd P-NP
-npm install
-npm start
+pnpm install
+pnpm start
 ```
 <br>
 
@@ -33,8 +33,8 @@ npm start
 ```sh
 git clone https://github.com/ProdigyPNP/P-NP.git
 cd P-NP
-npm install
-npm start
+pnpm install
+pnpm start
 ```
 <br>
 
@@ -50,66 +50,13 @@ npm start
 ```sh
 git clone https://github.com/ProdigyPNP/P-NP
 cd P-NP
-npm install
+pnpm install
 node dist
 ```
 <br><br>
 
 
 
-# Build Binaries
-
-## Build Binaries on Windows
-
-1. Install [Node.js with npm](https://nodejs.org) if you don't have it already.
-2. Install [git](https://git-scm.com) if you don't have it already.
-3. Open **Windows PowerShell**.
-4. Copy and paste the code snippet below to automatically build P-NP's binaries.
-
-```sh
-git clone https://github.com/ProdigyPNP/P-NP.git
-cd P-NP
-npm install
-npm run build
-npm run create-exes
-```
-<br>
-
-
-
-## Build Binaries on MacOS
-
-1. Install [Node.js with npm](https://nodejs.org) if you don't have it already.
-2. Install [git](https://git-scm.com) if you don't have it already.
-3. Open **iTerm**.
-4. Copy and paste the code snippet below to automatically build P-NP's binaries.
-
-```sh
-git clone https://github.com/ProdigyPNP/P-NP.git
-cd P-NP
-npm install
-npm run build
-npm run create-exes
-```
-<br>
-
-
-
-## Build Binaries on Linux
-
-1. Install [Node.js with npm](https://nodejs.org) if you don't have it already.
-2. Install [git](https://git-scm.com) if you don't have it already.
-3. Open **Terminal**.
-4. Copy and paste the code snippet below to automatically build P-NP's binaries.
-
-```sh
-git clone https://github.com/ProdigyPNP/P-NP
-cd P-NP
-npm install
-npm run build
-npm run create-exes
-```
-<br><br>
 
 # Repl
 
@@ -134,16 +81,16 @@ npm install
 
 <br><br>
 
-# npm package
+# Node.js package
 
 P-NP is available on npmjs at https://npmjs.com/package/p-np-patcher.
 
 ### Installing P-NP
 Shell
 ```shell
-npm install p-np-patcher
-npm install
-npm update
+pnpm install p-np-patcher
+pnpm install
+pnpm update
 ```
 
 <br>
@@ -151,9 +98,9 @@ npm update
 ### Uninstalling P-NP
 Shell
 ```shell
-npm uninstall p-np-patcher
-npm install
-npm update
+pnpm uninstall p-np-patcher
+pnpm install
+pnpm update
 ```
 
 <br>
