@@ -1,15 +1,16 @@
-import RateLimit from "express-rate-limit"; // Rate Limiter
+import beautify from "js-beautify"; // JavaScript beautifier
+import cors from "cors"; // CORS
+import express from "express"; // Express server
+import fetch from "node-fetch"; // fetch
 import fs from "fs"; // File System
+import RateLimit from "express-rate-limit"; // Rate Limiter
 import http from "http"; // HTTP Server
 import https from "https"; // HTTPS Server
-import express from "express"; // Express server
-import cors from "cors"; // CORS
-import { getGameStatus, getPatchedGameFile, getPatchedPublicGameFile } from "./util"; // Gamefile patchers
-import { DOWNLOAD_LINK, VERSION, LICENSE_LINK, HTTP_PORT, UNMINIFY_SOUCE, HTTPS, HTTPS_CHAIN_PATH, HTTPS_KEY_PATH, HTTPS_PORT, PRODUCTION } from "./constants"; // Constants
-import beautify from "js-beautify"; // JavaScript beautifier
-import { hash } from "./hash"; // Hash function
-import fetch from "node-fetch"; // fetch
-import { latestCheatGui, startCachingCheatGui } from "./cheatGuiCache";
+
+import { getGameStatus, getPatchedGameFile, getPatchedPublicGameFile } from "./util.js"; // Gamefile patchers
+import { DOWNLOAD_LINK, VERSION, LICENSE_LINK, HTTP_PORT, UNMINIFY_SOUCE, HTTPS, HTTPS_CHAIN_PATH, HTTPS_KEY_PATH, HTTPS_PORT, PRODUCTION } from "./constants.js"; // Constants
+import hash from "./hash.js"; // Hash function
+import { latestCheatGui, startCachingCheatGui } from "./cheatGuiCache.js";
 
 
 (async () => {

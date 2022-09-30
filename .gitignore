@@ -58,9 +58,6 @@ bower_components
 .lock-wscript
 
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
-build/Release
-
 
 # NodeJS Modules
 node_modules/
@@ -69,9 +66,6 @@ node_modules/
 # Dependency directories
 jspm_packages/
 
-
-# TypeScript v1 declaration files
-typings/
 
 
 # TypeScript cache
@@ -124,10 +118,6 @@ typings/
 
 # Gatsby files
 .cache/
-# Comment in the public line in if your project uses Gatsby and *not* Next.js
-# https://nextjs.org/blog/next-9-1#public-directory-support
-# public
-
 
 # vuepress build output
 .vuepress/dist
@@ -149,24 +139,9 @@ typings/
 .tern-port
 
 
-# Generated lock file
+# Generated lock files
 pnpm-lock.yaml
-
-
-# P-NP MacOS Binary
-p-np-patcher-macos
-p-np-macos
-
-
-# P-NP Windows Binary
-p-np-patcher-win.exe
-p-np-win.exe
-
-
-# P-NP Linux Binary
-p-np-patcher-linux
-p-np-linux
-
+package-lock.json
 
 # IntelliJ Idea Project Config
 /.idea/

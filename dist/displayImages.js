@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.displayImages = void 0;
-exports.displayImages = [
+export const displayImages = [
     "https://i.imgur.com/bPtAQ8I.png",
     "https://i.imgur.com/EVbS5zG.png",
     "https://i.imgur.com/ij1DgZi.png",

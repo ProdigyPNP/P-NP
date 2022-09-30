@@ -1,4 +1,4 @@
-import { GUI_HISTORY, GUI_LINK } from "./constants";
+import { GUI_HISTORY, GUI_LINK } from "./constants.js";
 import fetch from "node-fetch"; // fetch
 
 export var latestCheatGui : string = "";

@@ -1,38 +1,33 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
-const fs_1 = __importDefault(require("fs"));
-const http_1 = __importDefault(require("http"));
-const https_1 = __importDefault(require("https"));
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const util_1 = require("./util");
-const constants_1 = require("./constants");
-const js_beautify_1 = __importDefault(require("js-beautify"));
-const hash_1 = require("./hash");
-const node_fetch_1 = __importDefault(require("node-fetch"));
-const cheatGuiCache_1 = require("./cheatGuiCache");
+import beautify from "js-beautify";
+import cors from "cors";
+import express from "express";
+import fetch from "node-fetch";
+import fs from "fs";
+import RateLimit from "express-rate-limit";
+import http from "http";
+import https from "https";
+import { getGameStatus, getPatchedGameFile, getPatchedPublicGameFile } from "./util.js";
+import { DOWNLOAD_LINK, VERSION, LICENSE_LINK, HTTP_PORT, UNMINIFY_SOUCE, HTTPS, HTTPS_CHAIN_PATH, HTTPS_KEY_PATH, HTTPS_PORT, PRODUCTION } from "./constants.js";
+import hash from "./hash.js";
+import { latestCheatGui, startCachingCheatGui } from "./cheatGuiCache.js";
 (async () => {
-    (0, cheatGuiCache_1.startCachingCheatGui)();
-    const app = (0, express_1.default)();
+    startCachingCheatGui();
+    const app = express();
     app.set("trust proxy", true);
-    const gs = await (0, util_1.getGameStatus)();
+    const gs = await getGameStatus();
     if (!gs) {
         throw new Error("The game status request failed.");
     }
-    app.use((0, cors_1.default)());
+    app.use(cors());
     app.use((_req, res, next) => {
         res.set("Cache-Control", "no-store");
         next();
     });
-    app.use((0, express_rate_limit_1.default)({
+    app.use(RateLimit({
         windowMs: 20 * 1000,
         max: 4,
     }));
-    if (constants_1.PRODUCTION !== "" && constants_1.PRODUCTION !== "any") {
+    if (PRODUCTION !== "" && PRODUCTION !== "any") {
         app.use((req, res, next) => {
             if (req.hostname === "chat.prodigypnp.com") {
                 res.redirect("https://chat.prodigypnp.com:8443/");
@@ -40,7 +35,7 @@ const cheatGuiCache_1 = require("./cheatGuiCache");
             else if (req.hostname === "localhost") {
                 next();
             }
-            else if (req.hostname !== constants_1.PRODUCTION) {
+            else if (req.hostname !== PRODUCTION) {
                 res.status(403).send("Direct IP connection is prohibited. Try using hacks.prodigypnp.com");
             }
             else {
@@ -51,10 +46,10 @@ const cheatGuiCache_1 = require("./cheatGuiCache");
     app.get("/load-game.min.js", async (_req, res) => {
         var unmodifiedScript;
         var loadingText;
-        (await (0, node_fetch_1.default)("https://code.prodigygame.com/js/load-game-ff6c26a637.min.js")).text().then(result => {
+        (await fetch("https://code.prodigygame.com/js/load-game-ff6c26a637.min.js")).text().then(result => {
             unmodifiedScript = result;
         });
-        (await (0, node_fetch_1.default)("https://raw.githubusercontent.com/ProdigyPNP/P-NP/master/loadingText.txt")).text().then(result => {
+        (await fetch("https://raw.githubusercontent.com/ProdigyPNP/P-NP/master/loadingText.txt")).text().then(result => {
             loadingText = result;
             const loadVar = `const loadingText = \`${loadingText}\`.split("\\n");\n`;
             const send = loadVar + unmodifiedScript;
@@ -67,7 +62,7 @@ const cheatGuiCache_1 = require("./cheatGuiCache");
         const version = req.query.version ?? gs.gameClientVersion;
         try {
             res.type("js").send(`// game.min.js v${version}\n\n` +
-                (constants_1.UNMINIFY_SOUCE ? js_beautify_1.default : (_) => _)(await (0, util_1.getPatchedGameFile)(version)));
+                (UNMINIFY_SOUCE ? beautify : (_) => _)(await getPatchedGameFile(version)));
         }
         catch (e) {
             if (!(e instanceof Error))
@@ -79,7 +74,7 @@ const cheatGuiCache_1 = require("./cheatGuiCache");
         if (typeof req.query.hash !== "string")
             return res.status(400).send("No hash specified.");
         try {
-            res.type("js").send(await (0, util_1.getPatchedPublicGameFile)(req.query.hash));
+            res.type("js").send(await getPatchedPublicGameFile(req.query.hash));
         }
         catch (e) {
             if (!(e instanceof Error))
@@ -88,13 +83,13 @@ const cheatGuiCache_1 = require("./cheatGuiCache");
         }
     });
     app.get("/version", async (_req, res) => {
-        const output = constants_1.VERSION;
+        const output = VERSION;
         res.type("text/plain").send(output);
     });
-    app.get("/download", (_req, res) => res.redirect(constants_1.DOWNLOAD_LINK));
-    app.get("/license", (_req, res) => res.redirect(constants_1.LICENSE_LINK));
+    app.get("/download", (_req, res) => res.redirect(DOWNLOAD_LINK));
+    app.get("/license", (_req, res) => res.redirect(LICENSE_LINK));
     app.get("/gui", (_req, res) => {
-        res.type("text/js").send(cheatGuiCache_1.latestCheatGui);
+        res.type("text/js").send(latestCheatGui);
     });
     app.get("/gameVersion", async (req, res) => {
         if (req.query.version && typeof req.query.version !== "string")
@@ -113,8 +108,8 @@ const cheatGuiCache_1 = require("./cheatGuiCache");
         if (req.query.version && typeof req.query.version !== "string")
             return res.status(400).send("Invalid version specified.");
         const version = req.query.version ?? gs.gameClientVersion;
-        res.type("text/plain").send((0, hash_1.hash)(`// game.min.js v${version}\n\n` +
-            (constants_1.UNMINIFY_SOUCE ? js_beautify_1.default : (_) => _)(await (0, util_1.getPatchedGameFile)(version))));
+        res.type("text/plain").send(hash(`// game.min.js v${version}\n\n` +
+            (UNMINIFY_SOUCE ? beautify : (_) => _)(await getPatchedGameFile(version))));
     });
     app.get("/", (_req, res) => {
         res
@@ -133,21 +128,21 @@ const cheatGuiCache_1 = require("./cheatGuiCache");
 				</body>	
 			</html>`);
     });
-    if (constants_1.HTTPS) {
+    if (HTTPS) {
         console.log("ИСПОЛЬЗУЕМ HTTPS.");
-        let httpsServer = https_1.default.createServer({
-            key: fs_1.default.readFileSync(constants_1.HTTPS_KEY_PATH),
-            cert: fs_1.default.readFileSync(constants_1.HTTPS_CHAIN_PATH),
+        let httpsServer = https.createServer({
+            key: fs.readFileSync(HTTPS_KEY_PATH),
+            cert: fs.readFileSync(HTTPS_CHAIN_PATH),
         }, app);
-        httpsServer.listen(constants_1.HTTPS_PORT, () => {
-            console.log(`СЕРВЕР HTTPS ВКЛЮЧЕН НА: http://localhost:${constants_1.HTTPS_PORT}/`);
+        httpsServer.listen(HTTPS_PORT, () => {
+            console.log(`СЕРВЕР HTTPS ВКЛЮЧЕН НА: http://localhost:${HTTPS_PORT}/`);
         });
     }
     else {
         console.log("НЕ ИСПОЛЬЗУЕМ HTTPS.");
     }
-    http_1.default.createServer(app).listen(constants_1.HTTP_PORT, () => {
-        console.log(`СЕРВЕР HTTP ВКЛЮЧЕН НА: http://localhost:${constants_1.HTTP_PORT}/`);
+    http.createServer(app).listen(HTTP_PORT, () => {
+        console.log(`СЕРВЕР HTTP ВКЛЮЧЕН НА: http://localhost:${HTTP_PORT}/`);
     });
 })();
 //# sourceMappingURL=index.js.map

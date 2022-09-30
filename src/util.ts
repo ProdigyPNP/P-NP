@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import _ from "lodash";
-import { GUI_LINK, VERSION } from "./constants";
-import { displayImages } from "./displayImages";
+import { GUI_LINK, VERSION } from "./constants.js";
+import { displayImages } from "./displayImages.js";
 import { transform } from "sucrase";
 import { readFileSync } from "fs";
 

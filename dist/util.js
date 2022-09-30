@@ -1,21 +1,15 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPatchedPublicGameFile = exports.getPatchedGameFile = exports.patchGameFile = exports.logtraffic = exports.getGameFile = exports.getGameStatus = void 0;
-const node_fetch_1 = __importDefault(require("node-fetch"));
-const constants_1 = require("./constants");
-const displayImages_1 = require("./displayImages");
-const sucrase_1 = require("sucrase");
-const fs_1 = require("fs");
-const es6 = (...args) => (0, sucrase_1.transform)(String.raw(...args), { transforms: ["typescript"] }).code;
+import fetch from "node-fetch";
+import { GUI_LINK, VERSION } from "./constants.js";
+import { displayImages } from "./displayImages.js";
+import { transform } from "sucrase";
+import { readFileSync } from "fs";
+const es6 = (...args) => transform(String.raw(...args), { transforms: ["typescript"] }).code;
 let lastGameStatus = null;
-const getGameStatus = async () => {
+export const getGameStatus = async () => {
     if (lastGameStatus)
         return lastGameStatus;
     try {
-        const json = (await (await (0, node_fetch_1.default)("https://math.prodigygame.com/play?launcher=true")).text()).match(/(?<=gameStatusDataStr = ').+(?=')/);
+        const json = (await (await fetch("https://math.prodigygame.com/play?launcher=true")).text()).match(/(?<=gameStatusDataStr = ').+(?=')/);
         if (!json?.length)
             return null;
         return JSON.parse(json[0]);
@@ -25,29 +19,26 @@ const getGameStatus = async () => {
         return null;
     }
 };
-exports.getGameStatus = getGameStatus;
 setInterval(() => {
     lastGameStatus = null;
     patchedPublicGameFile = null;
 }, 30 * 60 * 1000);
 const gameFileCache = {};
-const getGameFile = async (version) => {
+export const getGameFile = async (version) => {
     if (version in gameFileCache)
         return gameFileCache[version];
     if (!version.match(/^[0-9-.]+$/))
         throw new Error("Invalid version specified.");
     try {
-        return (gameFileCache[version] = await (await (0, node_fetch_1.default)(`https://code.prodigygame.com/code/${version}/game.min.js?v=${version}`)).text());
+        return (gameFileCache[version] = await (await fetch(`https://code.prodigygame.com/code/${version}/game.min.js?v=${version}`)).text());
     }
     catch (e) {
         throw new Error(`Could not fetch game file with version ${version}.\nReason: ${e}`);
     }
 };
-exports.getGameFile = getGameFile;
-const logtraffic = () => {
+export const logtraffic = () => {
 };
-exports.logtraffic = logtraffic;
-const patchGameFile = (str, version) => {
+export const patchGameFile = (str, version) => {
     const app = str.match(/window,function\((.)/)[1];
     const game = str.match(/var (.)={}/)[1];
     const patches = Object.entries({
@@ -154,41 +145,39 @@ configurable: true,
 	fetch("https://infinitezero.net/hit",{method: "POST"});
 
 	console.log("%cP-NP Patcher", "font-size:40px;color:#540052;font-weight:900;font-family:sans-serif;");
-	console.log("%cVersion ${constants_1.VERSION}", "font-size:20px;color:#000025;font-weight:700;font-family:sans-serif;");
+	console.log("%cVersion ${VERSION}", "font-size:20px;color:#000025;font-weight:700;font-family:sans-serif;");
 	
-	console.image((e => e[Math.floor(Math.random() * e.length)])(${JSON.stringify(displayImages_1.displayImages)}));
+	console.image((e => e[Math.floor(Math.random() * e.length)])(${JSON.stringify(displayImages)}));
 	SW.Load.onGameLoad();
 	setTimeout(() =>
 		(async () =>
 			eval(
 				await (
 					await fetch(
-						"${constants_1.GUI_LINK}"
+						"${GUI_LINK}"
 					)
 				).text()
 			)
 		)(), 15000);
 	console.trace = () => {};
 
-	${(0, fs_1.readFileSync)("./obfuscatedCode.js")}
+	${readFileSync("./obfuscatedCode.js")}
 `}
 `;
 };
-exports.patchGameFile = patchGameFile;
 const patchedGameFileCache = {};
-const getPatchedGameFile = async (version) => {
+export const getPatchedGameFile = async (version) => {
     if (version in patchedGameFileCache)
         return patchedGameFileCache[version];
-    return (patchedGameFileCache[version] = (0, exports.patchGameFile)(await (0, exports.getGameFile)(version), version));
+    return (patchedGameFileCache[version] = patchGameFile(await getGameFile(version), version));
 };
-exports.getPatchedGameFile = getPatchedGameFile;
 let patchedPublicGameFile = null;
-const getPatchedPublicGameFile = async (hash) => {
+export const getPatchedPublicGameFile = async (hash) => {
     if (patchedPublicGameFile)
         return patchedPublicGameFile;
     if (!hash.match(/^[a-fA-F0-9]+$/))
         throw new Error("Invalid hash.");
-    const file = await (await (0, node_fetch_1.default)(`https://code.prodigygame.com/js/public-game-${hash}.min.js`)).text();
+    const file = await (await fetch(`https://code.prodigygame.com/js/public-game-${hash}.min.js`)).text();
     return (patchedPublicGameFile = `
 	(() => {
 		const console = new Proxy({}, { get: () => () => {} });
@@ -196,5 +185,4 @@ const getPatchedPublicGameFile = async (hash) => {
 	})();
 	`);
 };
-exports.getPatchedPublicGameFile = getPatchedPublicGameFile;
 //# sourceMappingURL=util.js.map
