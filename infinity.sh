@@ -1,4 +1,4 @@
 while true
 do
-    pnpm start
+    node dist
 done
