@@ -16,14 +16,17 @@ node dist
 ```
 
 ## Dependencies
-- [Node.js](https://nodejs.org/) (runtime) **v16 or above**
-- [git](https://git-scm.com/) (technically possible to use P-NP without git, but easier with git)
-- [pnpm](https://pnpm.io/) (package manager)
-
+- [Node.js](https://nodejs.org/)
+  - Node.js is the JavaScript runtime that we use
+  - P-NP needs Node.js **v16 or above** to run.
+- [git](https://git-scm.com/)
+  - It's technically possible to run P-NP without git, however git allows easy updating through `git pull`, and lots of other functionality.
+  - Using wget: ```wget https://github.com/ProdigyPNP/P-NP/archive/refs/heads/master.zip && unzip master.zip && rm master.zip && cd master && pnpm install && pnpm build && node dist```
+- [pnpm](https://pnpm.io/)
+  - It's the package manager we here at ProdigyPNP use. It's much better than the normal npm for a variety of reasons.
+  - Technically possible to use npm/yarn instead of pnpm for P-NP, but not reccomended.
 
 <br><br>
-
-
 
 
 # Repl
@@ -41,50 +44,31 @@ Repl is a bit wacky, since it uses a very old version of Node.js. This makes P-N
 
 ```sh
 node -v
-npm init -y && npm i --save-dev node@16 && npm config set prefix=$(pwd)/node_modules/node && export PATH=$(pwd)/node_modules/node/bin:$PATH
+npm i --save-dev node@16
+npm config set prefix=$(pwd)/node_modules/node
+export PATH=$(pwd)/node_modules/node/bin:$PATH
 node -v
-npm install
 
 ```
 
 <br><br>
 
-# Node.js package
-
+### Node.js Package
 P-NP is available on npmjs at https://npmjs.com/package/p-np-patcher.
-
-### Installing P-NP
-Shell
 ```shell
 pnpm install p-np-patcher
-pnpm install
-pnpm update
 ```
 
 <br>
 
-### Uninstalling P-NP
-Shell
-```shell
-pnpm uninstall p-np-patcher
-pnpm install
-pnpm update
-```
-
 <br>
 
-### Import in TypeScript
-TypeScript
+### Import
 ```typescript
 import PNP from "p-np-patcher";
 ```
 
 <br>
 
-### Import in JavaScript
-JavaScript
-```javascript
-const PNP = require("p-np-patcher");
-```
 
 <br>
