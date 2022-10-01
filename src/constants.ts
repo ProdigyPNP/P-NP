@@ -28,7 +28,7 @@ export const HTTPS_PORT : number = 0 || 443;
 
 /** If you want to unminify game.min.js before it is outputted to the browser, set this to true.
  * CAUTION: This is not recommended, as it will increase the size of the game.min.js file. Use only for debugging. */
-export const UNMINIFY_SOUCE : boolean = true;
+export const UNMINIFY_SOUCE : boolean = false;
 
 /** If you do not want to run the HTTPS server, change this to false.
  * CAUTION: You will then need a seperate method to get HTTPS (or have none). */

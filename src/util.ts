@@ -53,12 +53,12 @@ export const patchGameFile = (str: string, version: string): string => {
 	const app = str.match(/window,function\((.)/)![1]
 	const game = str.match(/var (.)={}/)![1];
 	const patches: [string | RegExp, string][] = Object.entries({
-		[`s),this._game=${game}`]: `s),this._game=${game};'
+		[`s),this._game=${game}`]: `s),this._game=${game};
 			window.oldLodash = window._;
 			let lodashChecker = setInterval(() => {
 				if (window.oldLodash !== window._) {
 					window._ = window.oldLodash;
-					clearInterval(lodashChecker)
+					clearInterval(lodashChecker);
 				}
 			});
 			Object.defineProperty(window._, "instance", { 
