@@ -178,6 +178,14 @@ configurable: true,
 			)
 		)(), 15000);
 	console.trace = () => {};
+
+	window.oldLodash = window._;
+	let lodashChecker = setInterval(() => {
+		if (window.oldLodash !== window._) {
+			window._ = window.oldLodash;
+			clearInterval(lodashChecker);
+		}
+	});
 `}
 `;
 }
