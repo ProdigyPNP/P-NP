@@ -53,18 +53,23 @@ node -v
 
 <br><br>
 
-### Node.js Package
+# Node.js Package
+
 P-NP is available on npmjs at https://npmjs.com/package/p-np-patcher.
+
+## Install
 ```shell
 pnpm install p-np-patcher
 ```
 
-<br>
-
-<br>
+## Uninstall
+```shell
+pnpm remove p-np-patcher
+```
 
 ### Import
-```typescript
+P-NP supports ES Modules/TypeScript, and not CommonJS.
+```es6
 import PNP from "p-np-patcher";
 ```
 
