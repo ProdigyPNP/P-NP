@@ -1,3 +1,9 @@
+<h1 align="center"><a href="https://github.com/ProdigyPNP/ProdigyMathGameHacking/blob/master/.github/ANNOUNCEMENT.md">Hacks are being shut down. Thanks for everything.</a></h1>
+
+<h2 align="center"><a href="https://discord.gg/2qzTbdXSg9">Our Discord server: discord.gg/2qzTbdXSg9</a></h2>
+
+
+
 # P-NP Patcher
 P-NP modifies and serves Prodigy's game files.
 <br>
