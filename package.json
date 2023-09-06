@@ -23,7 +23,7 @@
 		"@types/cors": "^2.8.14",
 		"@types/express": "^4.17.17",
 		"@types/js-beautify": "^1.14.0",
-		"@types/lodash": "^4.14.197",
+		"@types/lodash": "^4.14.198",
 		"@types/node": "^14.18.58",
 		"@types/node-fetch": "^2.6.4",
 		"@types/sjcl": "^1.0.30",
