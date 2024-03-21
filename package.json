@@ -32,7 +32,7 @@
 	"dependencies": {
 		"@hapi/cryptiles": "^6.0.1",
 		"cors": "^2.8.5",
-		"express": "^4.18.3",
+		"express": "^4.19.1",
 		"express-rate-limit": "^6.11.2",
 		"js-beautify": "^1.15.1",
 		"lodash": "^4.17.21",
